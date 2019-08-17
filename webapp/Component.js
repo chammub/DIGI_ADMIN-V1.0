@@ -1,3 +1,5 @@
+/*global firebase*/
+
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
@@ -25,6 +27,90 @@ sap.ui.define([
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
+			
+			// set the nav model
+			this.setModel(models.createNavModel(), "oNavigation");
+			
+			// set the fixed nav model
+			this.setModel(models.createFixedNavModel(), "oFixedNavigation");
+			
+			// set the view model
+			this.setModel(models.createViewModel(), "oViewModel");
+			
+			// global functions
+			this._loadGlobalNamspaceFunctions();
+			
+			// initialize firebase
+			this._firebaseIntialize();
+		},
+		
+		/**
+		 * The component is destroyed by UI5 automatically.
+		 * In this method, the ErrorHandler is destroyed.
+		 * @public
+		 * @override
+		 */
+		destroy: function () {
+			// this._oErrorHandler.destroy();
+			
+			// call the base component's destroy function
+			UIComponent.prototype.destroy.apply(this, arguments);
+		},
+		
+				/**
+		 * This method can be called to determine whether the sapUiSizeCompact or sapUiSizeCozy
+		 * design mode class should be set, which influences the size appearance of some controls.
+		 * @public
+		 * @return {string} css class, either 'sapUiSizeCompact' or 'sapUiSizeCozy' - or an empty string if no css class should be set
+		 */
+		getContentDensityClass: function () {
+			if (this._sContentDensityClass === undefined) {
+				// check whether FLP has already set the content density class; do nothing in this case
+				// eslint-disable-next-line sap-no-proprietary-browser-api
+				if (document.body.classList.contains("sapUiSizeCozy") || document.body.classList.contains("sapUiSizeCompact")) {
+					this._sContentDensityClass = "";
+				} else if (!Device.support.touch) { // apply "compact" mode if touch is not supported
+					this._sContentDensityClass = "sapUiSizeCompact";
+				} else {
+					// "cozy" in case of touch support; default for most sap.m controls, but needed for desktop-first controls like sap.ui.table.Table
+					this._sContentDensityClass = "sapUiSizeCozy";
+				}
+			}
+			return this._sContentDensityClass;
+		},
+		
+		// create firebase interface
+		_firebaseIntialize: function () {
+			var oResourceModel = this.getModel("i18n").getResourceBundle();
+
+			var config = {
+				apiKey: oResourceModel.getText("API_KEY"),
+				authDomain: oResourceModel.getText("AUTH_DOMAIN"),
+				databaseURL: oResourceModel.getText("DATABASE_URL"),
+				projectId: oResourceModel.getText("PROJECT_ID"),
+				storageBucket: oResourceModel.getText("STORAGE_BUCKET"),
+				messagingSenderId: oResourceModel.getText("MESSAGING_SENDER_ID"),
+				appId: oResourceModel.getText("APP_ID")
+			};
+			firebase.initializeApp(config);
+		},
+		
+		_loadGlobalNamspaceFunctions: function() {
+			var startGloabalBusyIndicator = function() {
+				return sap.ui.core.BusyIndicator.show(0);
+			};
+			
+			var endGloabalBusyIndicator = function() {
+				return sap.ui.core.BusyIndicator.hide();
+			};
+			
+			var getFirestoreInstance = function() {
+				return firebase.firestore();
+			};
+			
+			com.digiArtitus.StartGlobalBusyIndicator = startGloabalBusyIndicator;
+			com.digiArtitus.EndGlobalBusyIndicator = endGloabalBusyIndicator;
+			com.digiArtitus.FirestoreInstance = getFirestoreInstance;
 		}
 	});
 });

@@ -1,0 +1,26 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" 
+    xmlns:f="sap.f" 
+    xmlns="sap.m">
+    <Dialog title="Order Items">
+        <content>
+            <List id="display-items-id" items="{path: 'oViewModel>/DISPLAY_ORDERS', templateShareable: false}">
+                <CustomListItem>
+                    <HBox width="100%">
+                        <f:Avatar src="{oViewModel>IMAGE_URL}" displaySize="S" displayShape="Square" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+                        <VBox  width="100%" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+                            <HBox width="100%" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                <Text text="{oViewModel>NAME}"/>
+                                <Text text="{oViewModel>QUANTITY}" class="bold-txt sapUiSmallMarginEnd"/>
+                            </HBox>
+                            <Text text="{oViewModel>DESCRIPTION}"/>
+                        </VBox>
+                    </HBox>
+                </CustomListItem>
+            </List>
+        </content>
+
+        <buttons>
+            <Button text="Close" press="onCloseDisplayItems" type="Reject"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,49 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" 
+    xmlns:core="sap.ui.core"
+    xmlns:unified="sap.ui.unified">
+    <Dialog title="MENU" class="database-dialog">
+
+        <content>
+            <l:BlockLayout background="{oViewModel>/selectedTileBackground}">
+                <l:BlockLayoutRow>
+                    <l:BlockLayoutCell width="2" title="Menu" titleAlignment="Begin" class="block-title sapUiSmallMargin">
+                        <MessageStrip
+                            text="Menu name and image is the mandatory."
+                            type="Warning"
+                            showIcon="true"
+                            showCloseButton="false"
+                            class="sapUiTinyMarginTopBottom">
+                        </MessageStrip>
+
+                        <Label text="Name" labelFor="menu-name-id" class="sapUiTinyMarginTop"/>
+                        <Input id="menu-name-id" placeholder="Enter Name ..." valueStateText="Name must not be empty." value="{
+                                        path : 'oViewModel>/MENU_NAME',
+                                        type : 'sap.ui.model.type.String',
+                                        constraints : {
+                                            minLength: 1
+                                        }
+                                    }" change="onInputValueChange" required="true" />
+
+                    </l:BlockLayoutCell>
+                    <l:BlockLayoutCell width="2" title="Image" titleAlignment="Begin" class="block-title sapUiSmallMargin">
+                        <unified:FileUploader id="menu-file-uploader-id" width="100%" tooltip="file upload" typeMissmatch="onFileUploaderTypeMismatch" style="Emphasized" fileType="png,jpg,jpeg" placeholder="Choose a file to upload" class="sapUiTinyMarginTop">
+                        </unified:FileUploader>
+                        <HBox>
+                            <Button text="Upload" press="onMenuLoadImagePress" class="box-shadow-btn sapUiTinyMarginEnd" />
+                            <Button text="Remove" visible="{oViewModel>/MENU_PREVIEW_VISIBLE}" press="onMenuRemoveImagePress" type="Reject" class="box-shadow-btn" />
+                        </HBox>
+
+                        <Image src="{oViewModel>/MENU_PREVIEW_UPLOADER_FILE}" visible="{oViewModel>/MENU_PREVIEW_VISIBLE}" densityAware="false" width="100%" class="box-shadow sapUiSmallMarginTop">
+                        </Image>
+                    </l:BlockLayoutCell>
+                </l:BlockLayoutRow>
+            </l:BlockLayout>
+        </content>
+
+        <buttons>
+            <Button text="Save" press="onMenuSave" type="Accept"/>
+            <Button text="Close" press="onMenuDialogClose" type="Reject"/>
+        </buttons>
+
+    </Dialog>
+</core:FragmentDefinition>

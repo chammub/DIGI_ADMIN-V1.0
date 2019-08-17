@@ -1,0 +1,132 @@
+<core:FragmentDefinition xmlns="sap.m" 
+	xmlns:l="sap.ui.layout" 
+	xmlns:f="sap.ui.layout.form" 
+	xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:Form editable="true">
+			<f:title>
+				<core:Title text="Address" />
+			</f:title>
+			<f:layout>
+				<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1" singleContainerFullSize="false" />
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer title="Office details">
+					<f:formElements>
+						<f:FormElement label="GST No">
+							<f:fields>
+								<Input value="{oSettingsModel>/GST_NO}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Name">
+							<f:fields>
+								<Input value="{oSettingsModel>/USER_NAME}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Street">
+							<f:fields>
+								<Input value="{oSettingsModel>/BILLING_STREET_NO}">
+									<layoutData>
+										<l:GridData span="XL2 L2 M2 S4" />
+									</layoutData>
+								</Input>
+								<Input value="{oSettingsModel>/BILLING_STREET}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="ZIP Code/City">
+							<f:fields>
+								<Input value="{oSettingsModel>/BILLING_ZIPCODE}">
+									<layoutData>
+										<l:GridData span="XL2 L2 M2 S4" />
+									</layoutData>
+								</Input>
+								<Input value="{oSettingsModel>/BILLING_CITY}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Country">
+							<f:fields>
+								<Select id="country" selectedKey="{oSettingsModel>/BILLING_COUNTRY}">
+									<items>
+										<core:Item text="India" key="India"/>
+									</items>
+								</Select>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="Online">
+					<f:formElements>
+						<f:FormElement label="Web">
+							<f:fields>
+								<Input value="{oSettingsModel>/WEB_SITE}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Facebook">
+							<f:fields>
+								<Input value="{oSettingsModel>/FACEBOOK}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Youtube">
+							<f:fields>
+								<Input value="{oSettingsModel>/YOUTUBE}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Instagram">
+							<f:fields>
+								<Input value="{oSettingsModel>/INSTAGRAM}" />
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+		<f:Form editable="true">
+			<f:title>
+				<core:Title text="More" />
+			</f:title>
+			<f:layout>
+				<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1" singleContainerFullSize="false" />
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer title="Delivery details">
+					<f:formElements>
+						<f:FormElement label="SMS Notification">
+                            <f:fields>
+                            	<Switch state="{oSettingsModel>/SMS_NOTIFICATION}" />
+                            </f:fields>
+                        </f:FormElement>
+						<f:FormElement label="Delivery charge check">
+							<f:fields>
+								<Input value="{path:'oSettingsModel>/BILLING_DELIVERY_CHECK', type: 'sap.ui.model.type.Integer', constraints : { minLength: 1, maxLength: 10 }}" type="Number" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Delivery charge">
+							<f:fields>
+								<Input value="{path:'oSettingsModel>/BILLING_DELIVERY_CHARGE', type: 'sap.ui.model.type.Integer', constraints : { minLength: 1, maxLength: 10 }}" type="Number" />
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="Contact data">
+					<f:formElements>
+						<f:FormElement label="Email">
+							<f:fields>
+								<Input value="{oSettingsModel>/EMAIL}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Tel.">
+							<f:fields>
+								<Input value="{oSettingsModel>/TEL}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="SMS">
+							<f:fields>
+								<Input value="{oSettingsModel>/SMS}" />
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+	</VBox>
+</core:FragmentDefinition>

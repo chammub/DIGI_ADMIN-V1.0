@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<QuickView id="quickView" pages="{ path : 'oViewModel>/ORDER_CUSTOMER_INFO', templateShareable : 'true'}">
+		<QuickViewPage
+				pageId="{oViewModel>pageId}"
+				header="{oViewModel>header}"
+				icon="{oViewModel>icon}"
+				title="{oViewModel>title}"
+				titleUrl="{oViewModel>titleUrl}"
+				description="{oViewModel>description}"
+				groups="{ path : 'oViewModel>groups', templateShareable: false}">
+			<QuickViewGroup heading="{heading}" elements="{ path : 'oViewModel>elements', templateShareable: false}">
+				<QuickViewGroupElement
+						label="{oViewModel>label}"
+						value="{oViewModel>value}"
+						url="{oViewModel>url}"
+						type="{oViewModel>elementType}"
+						pageLinkId="{oViewModel>pageLinkId}"
+						emailSubject="{oViewModel>emailSubject}"
+						target="{oViewModel>target}"
+						>
+				</QuickViewGroupElement>
+			</QuickViewGroup>
+		</QuickViewPage>
+	</QuickView>
+</core:FragmentDefinition>

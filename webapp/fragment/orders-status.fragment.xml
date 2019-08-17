@@ -1,0 +1,19 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <ActionSheet title="Choose Your Action" showCancelButton="true" placement="Bottom">
+        <Button text="In Progress" icon="sap-icon://shipping-status" press="onStatusChanged">
+            <customData>
+                <core:CustomData key="key" value="IN PROGRESS"/>
+            </customData>
+        </Button>
+        <Button text="Delivered" icon="sap-icon://accept" press="onStatusChanged">
+            <customData>
+                <core:CustomData key="key" value="DELIVERED" />
+            </customData>
+        </Button>
+        <Button text="Reject" icon="sap-icon://decline" press="onStatusChanged">
+            <customData>
+                <core:CustomData key="key" value="REJECT" />
+            </customData>
+        </Button>
+    </ActionSheet>
+</core:FragmentDefinition>

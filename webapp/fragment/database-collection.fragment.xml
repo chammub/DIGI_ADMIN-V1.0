@@ -1,0 +1,39 @@
+<core:FragmentDefinition xmlns="sap.m" 
+    xmlns:core="sap.ui.core">
+    <Dialog title="COLLECTION">
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <MessageStrip
+                    text="Collection name is the mandatory."
+                    type="Warning"
+                    showIcon="true"
+                    showCloseButton="false"
+                    class="sapUiTinyMarginTopBottom">
+                </MessageStrip>
+
+                <Label text="Name" labelFor="collection-name-id" class="sapUiTinyMarginTop"/>
+                <Input 
+                	id="collection-name-id" 
+                	placeholder="Enter Name ..." 
+                	valueStateText="Name must not be empty." 
+                	value="{
+						path : 'oViewModel>/COLLECTION_NAME',
+						type : 'sap.ui.model.type.String',
+							constraints : {
+							minLength: 1
+						}
+					}" 
+					change="onInputValueChange" 
+					required="true" />
+
+            </VBox>
+        </content>
+
+        <buttons>
+            <Button text="Save" press="onCollectionSave" type="Accept"/>
+            <Button text="Close" press="onCollectionDialogClose" type="Reject"/>
+        </buttons>
+
+    </Dialog>
+</core:FragmentDefinition>

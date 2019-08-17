@@ -1,0 +1,84 @@
+<core:FragmentDefinition xmlns="sap.m" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:core="sap.ui.core" 
+    xmlns:unified="sap.ui.unified">
+    <Dialog title="ITEM" class="item-dialog">
+
+        <content>
+            <l:BlockLayout background="{oViewModel>/selectedTileBackground}">
+                <l:BlockLayoutRow>
+                    <l:BlockLayoutCell width="2" title="ITEM" titleAlignment="Begin" class="block-title sapUiSmallMargin">
+
+                        <VBox>
+                            <MessageStrip text="In Display Mode" type="Information" showIcon="true" showCloseButton="false" class="sapUiTinyMarginTopBottom">
+                            </MessageStrip>
+
+                            <Label text="Active" class="sapUiTinyMarginTop sapMLabelRequired" />
+                            <Switch state="{oViewModel>/ITEM_ACTIVE}" enabled="false" />
+
+                            <Label text="Item Code" class="sapUiTinyMarginTop sapMLabelRequired" />
+                            <Input value="{oViewModel>/ITEM_CODE}" editable="false" />
+
+                            <Label text="Name" class="sapUiTinyMarginTop sapMLabelRequired"/>
+                            <Input value="{oViewModel>/ITEM_NAME}" editable="false" />
+
+                            <Label text="Item Description" class="sapUiTinyMarginTop sapMLabelRequired" />
+                            <TextArea growing="true" rows="4" growingMaxLines="4" value="{oViewModel>/ITEM_DESC}" width="100%" editable="false" />
+                        </VBox>
+
+                    </l:BlockLayoutCell>
+
+                    <l:BlockLayoutCell width="2" title="PRICE" titleAlignment="Begin" class="block-title sapUiSmallMargin">
+                        <VBox>
+                            <Label text="Range of products" class="sapUiTinyMarginTop sapMLabelRequired"/>
+                            <Switch state="{oViewModel>/ITEM_RANGE_OF_PROD}" enabled="false" />
+							
+							<Label text="Tax Percentage" visible="{=!${oViewModel>/ITEM_RANGE_OF_PROD}}" class="sapUiTinyMarginTop sapMLabelRequired"/>
+                            <Input visible="{=!${oViewModel>/ITEM_RANGE_OF_PROD}}" value="{oViewModel>/ITEM_TAX}" description="%" editable="false" />
+
+                            <Label text="Net Price" visible="{=!${oViewModel>/ITEM_RANGE_OF_PROD}}" class="sapUiTinyMarginTop sapMLabelRequired"/>
+                            <Input visible="{=!${oViewModel>/ITEM_RANGE_OF_PROD}}" value="{oViewModel>/ITEM_NET_PRICE}" description="INR" editable="false" />
+
+                            <Label text="Sale Price" visible="{=!${oViewModel>/ITEM_RANGE_OF_PROD}}" class="sapUiTinyMarginTop sapMLabelRequired"/>
+                            <Input visible="{=!${oViewModel>/ITEM_RANGE_OF_PROD}}" value="{oViewModel>/ITEM_SALE_PRICE}" description="INR" editable="false" />
+
+                            <List items="{path:'oViewModel>/ITEM_RANGE_OF_PROD_ITEMS', templateShareable: false}" visible="{oViewModel>/ITEM_RANGE_OF_PROD}" class="sapUiTinyMarginTop">
+                                <CustomListItem type="Inactive" class="box-shadow-list sapUiTinyMarginBottom">
+                                    <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMargin">
+                                        <VBox>
+                                            <Label text="Description" />
+                                            <Text text="{oViewModel>DESCRIPTION}" />
+                                            <HBox justifyContent="SpaceBetween">
+                                                <VBox width="100%" class="sapUiMediumMarginEnd">
+                                                    <Label text="Tax" class="sapUiTinyMarginTop"/>
+                                                    <Text text="{oViewModel>TAX} %" />
+                                                </VBox>
+                                                <VBox width="100%" class="sapUiMediumMarginEnd">
+                                                    <Label text="Net Price" class="sapUiTinyMarginTop"/>
+                                                    <Text text="Rs. {oViewModel>NET_PRICE}" />
+                                                </VBox>
+                                                <VBox width="100%">
+                                                    <Label text="Sale Price" class="sapUiTinyMarginTop"/>
+                                                    <Text text="Rs. {oViewModel>SALE_PRICE}" />
+                                                </VBox>
+                                            </HBox>
+                                        </VBox>
+                                    </HBox>
+                                </CustomListItem>
+                            </List>
+                        </VBox>
+                    </l:BlockLayoutCell>
+
+                    <l:BlockLayoutCell width="2" title="IMAGE" titleAlignment="Begin" class="block-title sapUiSmallMargin">
+                        <Image src="{oViewModel>/ITEM_PREVIEW_UPLOADER_FILE}" visible="{oViewModel>/ITEM_PREVIEW_VISIBLE}" densityAware="false" width="100%" class="box-shadow sapUiSmallMarginTop" />
+                    </l:BlockLayoutCell>
+                </l:BlockLayoutRow>
+            </l:BlockLayout>
+        </content>
+
+        <buttons>
+            <Button text="Close" press="onDisplayItemDialogClose" type="Reject"/>
+        </buttons>
+
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,96 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:f="sap.f" xmlns:tnt="sap.tnt" xmlns:semantic="sap.m.semantic">
+	
+	<!--<semantic:FullscreenPage title="FullScreen Page Title">-->
+	<!--	<semantic:content>-->
+	<!--		<ObjectHeader title="Type something in the field, the Draft Indicator will be displayed in the footer"-->
+	<!--			intro="this is just a simulation of how the DraftIndicator will work" responsive="true"/>-->
+			<!--<form:SimpleForm editable="true">-->
+			<!--	<Label text="Type here"/>-->
+			<!--	<Input id="TypeHere" liveChange="handleLiveChange"/>-->
+			<!--</form:SimpleForm>-->
+	<!--	</semantic:content>-->
+	<!--	<semantic:customFooterContent>-->
+	<!--		<Button text="CustomFooterBtn" press="onPress"/>-->
+	<!--		<OverflowToolbarButton icon="sap-icon://settings" text="Settings" press="onPress"/>-->
+	<!--	</semantic:customFooterContent>-->
+	<!--</semantic:FullscreenPage>-->
+	
+	<tnt:ToolPage id="toolPage">
+		<tnt:header>
+			<tnt:ToolHeader>
+				<Button id="sideNavigationToggleButton" icon="sap-icon://menu2" type="Transparent" press="onToogleNavButtonPress">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow"/>
+					</layoutData>
+				</Button>
+				<ToolbarSpacer width="20px"/>
+				<Label text="ADMIN">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="High"/>
+					</layoutData>
+				</Label>
+				<tnt:ToolHeaderUtilitySeparator/>
+				<ToolbarSpacer>
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+					</layoutData>
+				</ToolbarSpacer>
+				<f:Avatar src="{oViewModel>/LOGGED_USER_PIC}" displaySize="XS"></f:Avatar>
+				<Button text="{oViewModel>/LOGGED_USER_NAME}" type="Transparent" press="handleUserNamePress">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow"/>
+					</layoutData>
+				</Button>
+				<Button icon="sap-icon://action-settings" iconDensityAware="true" tooltip="Notification" type="Transparent" press="handleUserNamePress">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="Low"/>
+					</layoutData>
+				</Button>
+				<Button icon="sap-icon://bell" iconDensityAware="true" tooltip="Notification" type="Transparent" press="handleUserNamePress">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="Low"/>
+					</layoutData>
+				</Button>
+			</tnt:ToolHeader>
+		</tnt:header>
+		<tnt:sideContent>
+			<tnt:SideNavigation id="admin-dashboard-id" expanded="true" selectedKey="{oViewModel>/selectedKey}" itemSelect="onSideNavItemSelect">
+				<tnt:NavigationList items="{path: 'oNavigation>/', templateShareable: false}">
+					<tnt:NavigationListItem text="{oNavigation>title}" icon="{oNavigation>icon}" key="{oNavigation>key}"
+						items="{path: 'oNavigation>items', templateShareable: false}">
+						<tnt:NavigationListItem text="{oNavigation>title}" key="{oNavigation>key}" enabled="{oNavigation>enabled}"/>
+					</tnt:NavigationListItem>
+				</tnt:NavigationList>
+				<tnt:fixedItem>
+					<tnt:NavigationList items="{path: 'oFixedNavigation>/', templateShareable: false}">
+						<tnt:NavigationListItem text="{oFixedNavigation>title}" icon="{oFixedNavigation>icon}" key="{oFixedNavigation>key}"></tnt:NavigationListItem>
+					</tnt:NavigationList>
+				</tnt:fixedItem>
+			</tnt:SideNavigation>
+		</tnt:sideContent>
+		<tnt:mainContents>
+			<NavContainer id="pageContainer" initialPage="Dashboard">
+				<pages>
+					<ScrollContainer id="Dashboard" horizontal="false" vertical="true" height="100%" class="dashboard-container-bg">
+						<core:Fragment fragmentName="com.digiArtitus.fragment.dashboard" type="XML"/>
+					</ScrollContainer>
+					<ScrollContainer id="Orders" horizontal="false" vertical="true" height="100%">
+						<core:Fragment fragmentName="com.digiArtitus.fragment.orders" type="XML"/>
+					</ScrollContainer>
+					<ScrollContainer id="Banners" horizontal="false" vertical="true" height="100%">
+						<core:Fragment fragmentName="com.digiArtitus.fragment.banner" type="XML"/>
+					</ScrollContainer>
+					<ScrollContainer id="DataManage" horizontal="false" vertical="true" height="100%">
+						<core:Fragment fragmentName="com.digiArtitus.fragment.database" type="XML"/>
+					</ScrollContainer>
+					<ScrollContainer id="Billing" horizontal="false" vertical="true" height="100%">
+						<core:Fragment fragmentName="com.digiArtitus.fragment.billing" type="XML"/>
+					</ScrollContainer>
+					<ScrollContainer id="Settings" horizontal="false" vertical="true" height="100%">
+						<core:Fragment fragmentName="com.digiArtitus.fragment.settings" type="XML"/>
+					</ScrollContainer>
+				</pages>
+			</NavContainer>
+		</tnt:mainContents>
+	</tnt:ToolPage>
+</core:FragmentDefinition>

@@ -1,0 +1,101 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" 
+	xmlns="sap.m" 
+	xmlns:l="sap.ui.layout" 
+	xmlns:f="sap.f" 
+	xmlns:unified="sap.ui.unified">
+	<VBox>
+		<!-- heading -->
+		<VBox class="vbox-white-bg">
+			<VBox class="sapUiSmallMargin">
+				<Label text="Database" class="dashboard-heading" />
+			</VBox>
+		</VBox>
+		<!-- body -->
+		<l:BlockLayout background="{oViewModel>/selectedTileBackground}">
+			<l:BlockLayoutRow>
+				<l:BlockLayoutCell width="2" title="COLLECTION" titleAlignment="Begin" class="block-title sapUiSmallMargin">
+					<VBox>
+						<List id="collection-list-id" items="{ path: 'oViewModel>/COLLECTIONS', templateShareable: false }" visible="{= ${oViewModel>/COLLECTIONS}.length > 0 }" mode="SingleSelectMaster" itemPress="onCollectionListPress" updateFinished="onListUpdateFinished" growing="true" growingThreshold="4" growingScrollToLoad="false" class="box-shadow-list sapUiMediumMarginTop">
+							<CustomListItem type="Active" press="onCollectionListPress">
+								<HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMargin">
+									<HBox alignItems="Center">
+										<f:Avatar initials="{oViewModel>INITIALS}" displaySize="S" class="sapUiTinyMarginEnd">
+										</f:Avatar>
+										<Text text="{oViewModel>NAME}">
+										</Text>
+									</HBox>
+									
+									<HBox alignItems="Center">
+										<core:Icon src="sap-icon://edit" color="#E69A17" press="onCollectionListEditPress" class="sapUiSmallMarginEnd">
+										</core:Icon>
+										<core:Icon src="sap-icon://delete" color="#FF0000" press="onCollectionListDeletePress">
+										</core:Icon>
+									</HBox>
+								</HBox>
+							</CustomListItem>
+						</List>
+						<HBox class="no-data-hbox">
+							<core:Icon src="sap-icon://add-document" color="#2196F3" visible="{= ${oViewModel>/COLLECTIONS}.length &lt;= 0 }" press="onBannerCollectionListEditPress" class="no-data-icon" />
+						</HBox>
+						<Button text="Add" icon="sap-icon://add" press="onCollectionDialogAddPress" class="box-shadow-btn sapUiTinyMarginTop" />
+					</VBox>
+				</l:BlockLayoutCell>
+				<l:BlockLayoutCell width="2" visible="{= ${oViewModel>/COLLECTIONS}.length > 0 }" title="MENU" titleAlignment="Begin" class="block-title sapUiSmallMargin">
+					<VBox>
+						<List id="menu-list-id" items="{ path: 'oViewModel>/MENU', templateShareable: false }" visible="{= ${oViewModel>/MENU}.length > 0 }" mode="SingleSelectMaster" itemPress="onMenuListPress" updateFinished="onListUpdateFinished" growing="true" growingThreshold="4" growingScrollToLoad="false" class="box-shadow-list sapUiMediumMarginTop">
+							<CustomListItem type="Active" press="onMenuListPress">
+								<HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMargin">
+									<HBox alignItems="Center">
+										<f:Avatar src="{oViewModel>IMAGE_URL}" displaySize="S" displayShape="Square" class="sapUiTinyMarginEnd">
+										</f:Avatar>
+										<Text text="{oViewModel>NAME}">
+										</Text>
+									</HBox>
+
+									<HBox alignItems="Center">
+										<core:Icon src="sap-icon://edit" color="#E69A17" press="onMenuListEditPress" class="sapUiSmallMarginEnd">
+										</core:Icon>
+										<core:Icon src="sap-icon://delete" color="#FF0000" press="onMenuListDeletePress">
+										</core:Icon>
+									</HBox>
+								</HBox>
+							</CustomListItem>
+						</List>
+						<HBox class="no-data-hbox">
+							<core:Icon src="sap-icon://add-document" color="#2196F3" visible="{= ${oViewModel>/MENU}.length &lt;= 0 }" press="onBannerCollectionListEditPress" class="no-data-icon" />
+						</HBox>
+						<Button text="Add" icon="sap-icon://add" press="onMenuDialogAddPress" class="box-shadow-btn sapUiTinyMarginTop" />
+					</VBox>
+				</l:BlockLayoutCell>
+				<l:BlockLayoutCell width="2" visible="{= ${oViewModel>/MENU}.length > 0 }" title="ITEMS" titleAlignment="Begin" class="block-title sapUiSmallMargin">
+					<VBox>
+						<List id="items-list-id" items="{ path: 'oViewModel>/ITEMS', templateShareable: false }" visible="{= ${oViewModel>/ITEMS}.length > 0 }" mode="SingleSelectMaster" itemPress="onItemListPress" growing="true" growingThreshold="4" growingScrollToLoad="false" class="box-shadow-list sapUiMediumMarginTop">
+							<CustomListItem type="Active" press="onItemListPress">
+								<HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMargin">
+									<HBox alignItems="Center">
+										<f:Avatar src="{oViewModel>IMAGE_URL}" displaySize="S" displayShape="Square" class="sapUiTinyMarginEnd">
+										</f:Avatar>
+										<Text text="{oViewModel>NAME}">
+										</Text>
+									</HBox>
+
+									<HBox alignItems="Center">
+										<core:Icon src="sap-icon://edit" color="#E69A17" press="onItemListEditPress" class="sapUiSmallMarginEnd">
+										</core:Icon>
+										<core:Icon src="sap-icon://delete" color="#FF0000" press="onItemListDeletePress">
+										</core:Icon>
+									</HBox>
+								</HBox>
+							</CustomListItem>
+						</List>
+						<HBox class="no-data-hbox">
+							<core:Icon src="sap-icon://add-document" color="#2196F3" visible="{= ${oViewModel>/ITEMS}.length &lt;= 0 }" press="onBannerCollectionListEditPress" class="no-data-icon" />
+						</HBox>
+						<Button text="Add" icon="sap-icon://add" press="onItemDialogAddPress" class="box-shadow-btn sapUiTinyMarginTop" />
+					</VBox>
+				</l:BlockLayoutCell>
+			</l:BlockLayoutRow>
+		</l:BlockLayout>
+		
+	</VBox>
+</core:FragmentDefinition>

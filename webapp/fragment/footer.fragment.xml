@@ -1,0 +1,8 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+	<!-- footer -->
+	<VBox class="vbox-white-bg">
+		<HBox justifyContent="Center" class="sapUiSmallMargin">
+			<Label text="{i18n>APP_FOOTER_TEXT}"/>
+		</HBox>
+	</VBox>
+</core:FragmentDefinition>
