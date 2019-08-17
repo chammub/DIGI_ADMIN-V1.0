@@ -51,8 +51,6 @@ sap.ui.define([
 		 * @override
 		 */
 		destroy: function () {
-			// this._oErrorHandler.destroy();
-			
 			// call the base component's destroy function
 			UIComponent.prototype.destroy.apply(this, arguments);
 		},

@@ -1,7 +1,8 @@
 {
     "resources": [
         {
-            "name": "fragment/banner-collection.fragment.xml"
+            "name": "controller/Database-dbg.js",
+            "isDebug": true
         },
         {
             "name": "model/models.js"
@@ -19,13 +20,13 @@
             "name": "controller/Orders.js"
         },
         {
-            "name": "manifest.json"
+            "name": "controller/Main.controller.js"
         },
         {
             "name": "controller/Database.js"
         },
         {
-            "name": "controller/Chart.js"
+            "name": "manifest.json"
         },
         {
             "name": "controller/Banner.js"
@@ -34,15 +35,14 @@
             "name": "Component.js"
         },
         {
+            "name": "manifest-bundle.zip"
+        },
+        {
             "name": "Component-preload.js",
             "merged": true
         },
         {
-            "name": "manifest-bundle.zip"
-        },
-        {
-            "name": "model/models-dbg.js",
-            "isDebug": true
+            "name": "controller/Chart.js"
         },
         {
             "name": "model/formatter-dbg.js",
@@ -65,7 +65,7 @@
             "isDebug": true
         },
         {
-            "name": "controller/Database-dbg.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
@@ -78,10 +78,6 @@
         },
         {
             "name": "Component-dbg.js",
-            "isDebug": true
-        },
-        {
-            "name": "Component-preload-dbg.js",
             "isDebug": true
         },
         {
@@ -171,7 +167,7 @@
             "name": "fragment/banner-item.fragment.xml"
         },
         {
-            "name": "controller/Main.controller.js"
+            "name": "fragment/banner-collection.fragment.xml"
         },
         {
             "name": "css/style.css"
