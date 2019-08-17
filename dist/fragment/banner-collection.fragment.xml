@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns="sap.m" 
+    xmlns:core="sap.ui.core">
+    <Dialog title="BANNER COLLECTION">
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <MessageStrip
+                    text="Banner Collection name is the mandatory."
+                    type="Warning"
+                    showIcon="true"
+                    showCloseButton="false"
+                    class="sapUiTinyMarginTopBottom">
+                </MessageStrip>
+
+                <Label text="Name" labelFor="banner-collection-name-id" class="sapUiTinyMarginTop"/>
+                <Input id="banner-collection-name-id" placeholder="Enter Name ..." valueStateText="Name must not be empty." value="{
+								path : 'oViewModel>/BANNER_COLLECTION_NAME',
+								type : 'sap.ui.model.type.String',
+								constraints : {
+									minLength: 1
+								}
+							}" change="onInputValueChange" required="true" />
+
+            </VBox>
+        </content>
+
+        <buttons>
+            <Button text="Save" press="onBannerCollectionSave" type="Accept"/>
+            <Button text="Close" press="onBannerCollectionDialogClose" type="Reject"/>
+        </buttons>
+
+    </Dialog>
+</core:FragmentDefinition>

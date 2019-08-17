@@ -1,0 +1,51 @@
+<core:FragmentDefinition xmlns="sap.m" 
+    xmlns:core="sap.ui.core">
+    <Dialog title="Add Item">
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Label text="Description" labelFor="item-range-description-id" class="sapMLabelRequired"/>
+                <TextArea id="item-range-description-id" placeholder="Enter Description" growing="true" rows="4" growingMaxLines="5" valueStateText="Description must not be empty." value="{
+								path : 'oViewModel>/RANGE_ITEM_DESC',
+								type : 'sap.ui.model.type.String',
+								constraints : {
+									minLength: 1
+								}
+							}" width="100%" />
+							
+				<Label text="Tax Percentage" labelFor="item-range-tax-id" class="sapUiTinyMarginTop"/>
+                <Input id="item-range-tax-id" placeholder="Enter Tax Percentage ..." valueStateText="Tax percentage must not be empty." value="{
+								path : 'oViewModel>/RANGE_ITEM_TAX',
+								type : 'sap.ui.model.type.String',
+								constraints : {
+									minLength: 1
+								}
+							}" change="onInputValueChange" required="true" />
+							
+                <Label text="Net Price" labelFor="item-range-net-price-id" class="sapUiTinyMarginTop"/>
+                <Input id="item-range-net-price-id" placeholder="Enter Net Price ..." valueStateText="Net price must not be empty." value="{
+								path : 'oViewModel>/RANGE_ITEM_NET_PRICE',
+								type : 'sap.ui.model.type.String',
+								constraints : {
+									minLength: 1
+								}
+							}" change="onInputValueChange" required="true" />
+
+                <Label text="Sale Price" labelFor="item-range-sale-price-id" class="sapUiTinyMarginTop"/>
+                <Input id="item-range-sale-price-id" placeholder="Enter Sale Price ..." valueStateText="Sale price must not be empty." value="{
+								path : 'oViewModel>/RANGE_ITEM_SALE_PRICE',
+								type : 'sap.ui.model.type.String',
+								constraints : {
+									minLength: 1
+								}
+							}" change="onInputValueChange" required="true" />
+            </VBox>
+        </content>
+
+        <buttons>
+            <Button text="Save" press="onRangeItemSavePress" type="Accept"/>
+            <Button text="Close" press="onRangeItemClosePress" type="Reject"/>
+        </buttons>
+
+    </Dialog>
+</core:FragmentDefinition>

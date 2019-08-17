@@ -1,0 +1,49 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" 
+    xmlns:core="sap.ui.core"
+    xmlns:unified="sap.ui.unified">
+    <Dialog title="BANNER ITEM" class="database-dialog">
+
+        <content>
+            <l:BlockLayout background="{oViewModel>/selectedTileBackground}">
+                <l:BlockLayoutRow>
+                    <l:BlockLayoutCell width="2" title="ITEM" titleAlignment="Begin" class="block-title sapUiSmallMargin">
+                        <MessageStrip
+                            text="Banner name and image is the mandatory."
+                            type="Warning"
+                            showIcon="true"
+                            showCloseButton="false"
+                            class="sapUiTinyMarginTopBottom">
+                        </MessageStrip>
+
+                        <Label text="Name" labelFor="banner-item-name-id" class="sapUiTinyMarginTop"/>
+                        <Input id="banner-item-name-id" placeholder="Enter Name ..." valueStateText="Name must not be empty." value="{
+                                        path : 'oViewModel>/BANNER_ITEM_NAME',
+                                        type : 'sap.ui.model.type.String',
+                                        constraints : {
+                                            minLength: 1
+                                        }
+                                    }" change="onInputValueChange" required="true" />
+
+                    </l:BlockLayoutCell>
+                    <l:BlockLayoutCell width="2" title="Image" titleAlignment="Begin" class="block-title sapUiSmallMargin">
+                        <unified:FileUploader id="banner-item-file-uploader-id" width="100%" tooltip="file upload" typeMissmatch="onFileUploaderTypeMismatch" style="Emphasized" fileType="png,jpg,jpeg" placeholder="Choose a file to upload" class="sapUiTinyMarginTop">
+                        </unified:FileUploader>
+                        <HBox>
+                            <Button text="Upload" press="onBannerItemLoadImagePress" class="box-shadow-btn sapUiTinyMarginEnd" />
+                            <Button text="Remove" visible="{oViewModel>/BANNER_ITEM_PREVIEW_VISIBLE}" press="onBannerItemRemoveImagePress" type="Reject" class="box-shadow-btn" />
+                        </HBox>
+
+                        <Image src="{oViewModel>/BANNER_ITEM_PREVIEW_UPLOADER_FILE}" visible="{oViewModel>/BANNER_ITEM_PREVIEW_VISIBLE}" densityAware="false" width="100%" class="box-shadow sapUiSmallMarginTop">
+                        </Image>
+                    </l:BlockLayoutCell>
+                </l:BlockLayoutRow>
+            </l:BlockLayout>
+        </content>
+
+        <buttons>
+            <Button text="Save" press="onBannerItemSave" type="Accept"/>
+            <Button text="Close" press="onBannerItemDialogClose" type="Reject"/>
+        </buttons>
+
+    </Dialog>
+</core:FragmentDefinition>

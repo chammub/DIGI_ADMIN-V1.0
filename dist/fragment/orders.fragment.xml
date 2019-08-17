@@ -1,0 +1,86 @@
+<core:FragmentDefinition xmlns="sap.m" 
+    xmlns:core="sap.ui.core" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.f">
+    <VBox width="100%">
+        <!-- heading -->
+        <VBox class="vbox-white-bg">
+            <VBox class="sapUiSmallMargin">
+                <Label text="Orders" class="dashboard-heading" />
+            </VBox>
+        </VBox>
+
+        <!-- body -->
+        <MessageStrip text="Manage orders" type="Success" class="sapUiSmallMargin" showIcon="true" />
+
+        <l:BlockLayout background="{oViewModel>/selectedTileBackground}">
+            <l:BlockLayoutRow>
+                <l:BlockLayoutCell width="2" title="Order Items" titleAlignment="Begin" class="block-title sapUiSmallMargin">
+
+                    <Table id="orders-id" mode="None" items="{path: 'oViewModel>/ORDERS', templateShareable: false}" class="order-table">
+                        <headerToolbar>
+                            <Toolbar>
+                                <Button text="Export" press="onDataExport" type="Emphasized" />
+                                <ToolbarSpacer />
+                                <ToggleButton text="TODAY" press="onOrdersToggleBtn" pressed="{oViewModel>/bOrdersToday}" class="sapUiTinyMarginEnd">
+                                    <customData>
+                                        <core:CustomData key="orders" value="TODAY" />
+                                    </customData>
+                                </ToggleButton>
+                                <ToggleButton text="ALL" press="onOrdersToggleBtn" pressed="{oViewModel>/bOrdersAll}" class="sapUiTinyMarginEnd">
+                                    <customData>
+                                        <core:CustomData key="orders" value="ALL" />
+                                    </customData>
+                                </ToggleButton>
+                            </Toolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column width="20%">
+                                <Text text="Order Id" />
+                            </Column>
+                            <Column width="15%" hAlign="Center">
+                                <Text text="Order Type" />
+                            </Column>
+                            <Column width="15%" minScreenWidth="Desktop" hAlign="Center" demandPopin="true">
+                                <Text text="Order Status" />
+                            </Column>
+                            <Column width="12%" minScreenWidth="Tablet" hAlign="Center" demandPopin="true">
+                                <Text text="Date" />
+                            </Column>
+                            <Column width="12%" minScreenWidth="Desktop" hAlign="Center" demandPopin="true">
+                                <Text text="Items" />
+                            </Column>
+                            <Column width="12%" minScreenWidth="Desktop" hAlign="Center" demandPopin="true">
+                                <Text text="Invoice" />
+                            </Column>
+                            <Column width="10%" minScreenWidth="Tablet" hAlign="End">
+                                <Text text="Price" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{oViewModel>ORDER_ID}" />
+                                    <ObjectStatus text="{oViewModel>ORDER_TYPE}" icon="{= ${oViewModel>ORDER_TYPE} === 'POS' ? 'sap-icon://busy' : 'sap-icon://customer'}" active="true" press="onOrderTypePress" state="Information" />
+                                    <ObjectStatus text="{oViewModel>ORDER_STATUS}" icon="{path: 'oViewModel>ORDER_STATUS', formatter: '.formatter.orderStatusIcon'}" active="true" press="onOrderStatusPress" state="{path: 'oViewModel>ORDER_STATUS', formatter: '.formatter.orderStatus'}" />
+                                    <Text text="{oViewModel>TIME_AGO}" />
+                                    <ObjectStatus text="ITEMS" icon="sap-icon://cart-5" active="true" press="onOrderItemsPress" state="Information" />
+                                    <ObjectStatus text="RECEIPT" icon="sap-icon://receipt" active="true" press="onOrderReceiptPress" state="Success" />
+                                    <ObjectNumber number="{ path: 'oViewModel>TOTAL_PAYABLE',
+                                            type: 'sap.ui.model.type.Float',
+                                            formatOptions: {
+                                                minFractionDigits: 2,
+                                                maxFractionDigits: 2
+                                            }
+                                        }" unit="{oViewModel>/CURRENCY}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+
+                </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+        </l:BlockLayout>
+    
+    </VBox>
+</core:FragmentDefinition>

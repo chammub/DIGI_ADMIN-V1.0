@@ -1,0 +1,143 @@
+<core:FragmentDefinition xmlns="sap.m" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:core="sap.ui.core" 
+    xmlns:unified="sap.ui.unified">
+    <Dialog title="ITEM" class="item-dialog">
+
+        <content>
+            <l:BlockLayout background="{oViewModel>/selectedTileBackground}">
+                <l:BlockLayoutRow>
+                    <l:BlockLayoutCell width="2" title="ITEM" titleAlignment="Begin" class="block-title sapUiSmallMargin">
+
+                        <VBox>
+                            <MessageStrip text="Fill all the mandatory fields." type="Warning" showIcon="true" showCloseButton="false" class="sapUiTinyMarginTopBottom">
+                            </MessageStrip>
+
+                            <Label text="Active" labelFor="item-active-id" class="sapUiTinyMarginTop sapMLabelRequired"/>
+                            <Switch id="item-active-id" state="{oViewModel>/ITEM_ACTIVE}" />
+
+                            <Label text="Item Code" labelFor="item-code-id" class="sapUiTinyMarginTop"/>
+                            <Input id="item-code-id" placeholder="Enter Item Code ..." valueStateText="Item Code must not be empty." value="{
+                                        path : 'oViewModel>/ITEM_CODE',
+                                        type : 'sap.ui.model.type.String',
+                                        constraints : {
+                                            minLength: 1
+                                        }
+                                    }" change="onInputValueChange" required="true" />
+
+                            <Label text="Name" labelFor="item-name-id" class="sapUiTinyMarginTop"/>
+                            <Input id="item-name-id" placeholder="Enter Name ..." valueStateText="Name must not be empty." value="{
+                                        path : 'oViewModel>/ITEM_NAME',
+                                        type : 'sap.ui.model.type.String',
+                                        constraints : {
+                                            minLength: 1
+                                        }
+                                    }" change="onInputValueChange" required="true" />
+
+                            <Label text="Item Description" labelFor="item-description-id" class="sapUiTinyMarginTop sapMLabelRequired" />
+                            <TextArea id="item-description-id" placeholder="Enter Description" growing="true" rows="4" growingMaxLines="4" valueStateText="Description must not be empty." value="{
+                                            path : 'oViewModel>/ITEM_DESC',
+                                            type : 'sap.ui.model.type.String',
+                                            constraints : {
+                                                minLength: 1
+                                            }
+                                        }" width="100%"/>
+
+                        </VBox>
+
+                    </l:BlockLayoutCell>
+
+                    <l:BlockLayoutCell width="2" title="PRICE" titleAlignment="Begin" class="block-title sapUiSmallMargin">
+                        <VBox>
+                            <Label text="Range of products" labelFor="item-rangeOfProducts-id" class="sapUiTinyMarginTop sapMLabelRequired"/>
+                            <Switch id="item-rangeOfProducts-id" state="{oViewModel>/ITEM_RANGE_OF_PROD}" />
+
+                            <Label text="Tax Percentage" visible="{=!${oViewModel>/ITEM_RANGE_OF_PROD}}" labelFor="item-tax-id" class="sapUiTinyMarginTop"/>
+                            <Input id="item-tax-id" visible="{=!${oViewModel>/ITEM_RANGE_OF_PROD}}" placeholder="Enter Tax ..." valueStateText="Tax must not be empty." value="{
+                                            path : 'oViewModel>/ITEM_TAX',
+                                            type : 'sap.ui.model.type.String',
+                                            constraints : {
+                                                minLength: 1
+                                            }
+                                        }" description="%" change="onInputValueChange" required="true" />
+                                        
+                            <Label text="Net Price" visible="{=!${oViewModel>/ITEM_RANGE_OF_PROD}}" labelFor="item-net-price-id" class="sapUiTinyMarginTop"/>
+                            <Input id="item-net-price-id" visible="{=!${oViewModel>/ITEM_RANGE_OF_PROD}}" placeholder="Enter Net Price ..." valueStateText="Net price must not be empty." value="{
+                                            path : 'oViewModel>/ITEM_NET_PRICE',
+                                            type : 'sap.ui.model.type.String',
+                                            constraints : {
+                                                minLength: 1
+                                            }
+                                        }" change="onInputValueChange" required="true" />
+
+                            <Label text="Sale Price" visible="{=!${oViewModel>/ITEM_RANGE_OF_PROD}}" labelFor="item-sale-price-id" class="sapUiTinyMarginTop"/>
+                            <Input id="item-sale-price-id" visible="{=!${oViewModel>/ITEM_RANGE_OF_PROD}}" placeholder="Enter Sale Price ..." valueStateText="Sale price must not be empty." value="{
+                                            path : 'oViewModel>/ITEM_SALE_PRICE',
+                                            type : 'sap.ui.model.type.String',
+                                            constraints : {
+                                                minLength: 1
+                                            }
+                                        }" change="onInputValueChange" required="true" />
+
+                            <Button text="Add Item Price" icon="sap-icon://add" press="onRangeItemAddPress" visible="{oViewModel>/ITEM_RANGE_OF_PROD}" class="box-shadow-btn sapUiTinyMarginTop">
+                            </Button>
+
+                            <List id="range-of-items-list-id" items="{ path: 'oViewModel>/ITEM_RANGE_OF_PROD_ITEMS', templateShareable: false}" visible="{oViewModel>/ITEM_RANGE_OF_PROD}" class="sapUiTinyMarginTop">
+                                <CustomListItem type="Inactive" class="box-shadow-list sapUiTinyMarginBottom">
+                                    <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMargin">
+                                        <VBox>
+                                            <Label text="Description" labelFor="item-range-description-list-id"/>
+                                            <Text id="item-range-description-list-id" text="{oViewModel>DESCRIPTION}">
+                                            </Text>
+                                            <HBox justifyContent="SpaceBetween">
+                                                <VBox width="100%" class="sapUiMediumMarginEnd">
+                                                    <Label text="Tax" labelFor="item-range-net-price-list-id" class="sapUiTinyMarginTop"/>
+                                                    <Text id="item-range-tax-list-id" text="{oViewModel>TAX}" />
+                                                </VBox>
+                                                <VBox width="100%" class="sapUiMediumMarginEnd">
+                                                    <Label text="Net Price" labelFor="item-range-net-price-list-id" class="sapUiTinyMarginTop"/>
+                                                    <Text id="item-range-net-price-list-id" text="Rs. {oViewModel>NET_PRICE}">
+                                                    </Text>
+                                                </VBox>
+                                                <VBox width="100%">
+                                                    <Label text="Sale Price" labelFor="item-range-sale-price-list-id" class="sapUiTinyMarginTop"/>
+                                                    <Text id="item-range-sale-price-list-id" text="Rs. {oViewModel>SALE_PRICE}">
+                                                    </Text>
+                                                </VBox>
+                                            </HBox>
+                                        </VBox>
+
+                                        <HBox alignItems="Center">
+                                            <core:Icon src="sap-icon://edit" color="#E69A17" press="onRangeItemEditPress" class="sapUiSmallMarginEnd">
+                                            </core:Icon>
+                                            <core:Icon src="sap-icon://delete" color="#FF0000" press="onRangeItemDeletePress">
+                                            </core:Icon>
+                                        </HBox>
+                                    </HBox>
+                                </CustomListItem>
+                            </List>
+                        </VBox>
+                    </l:BlockLayoutCell>
+
+                    <l:BlockLayoutCell width="2" title="IMAGE" titleAlignment="Begin" class="block-title sapUiSmallMargin">
+                        <unified:FileUploader id="item-file-uploader-id" width="100%" tooltip="file upload" typeMissmatch="onFileUploaderTypeMismatch" style="Emphasized" fileType="png,jpg,jpeg" placeholder="Choose a file to upload" class="sapUiTinyMarginTop">
+                        </unified:FileUploader>
+                        <HBox>
+                            <Button text="Upload" press="onItemLoadImagePress" class="box-shadow-btn sapUiTinyMarginEnd" />
+                            <Button text="Remove" visible="{oViewModel>/ITEM_PREVIEW_VISIBLE}" press="onItemRemoveImagePress" type="Reject" class="box-shadow-btn" />
+                        </HBox>
+
+                        <Image src="{oViewModel>/ITEM_PREVIEW_UPLOADER_FILE}" visible="{oViewModel>/ITEM_PREVIEW_VISIBLE}" densityAware="false" width="100%" class="box-shadow sapUiSmallMarginTop">
+                        </Image>
+                    </l:BlockLayoutCell>
+                </l:BlockLayoutRow>
+            </l:BlockLayout>
+        </content>
+
+        <buttons>
+            <Button text="Save" press="onItemSave" type="Accept"/>
+            <Button text="Close" press="onItemDialogClose" type="Reject"/>
+        </buttons>
+
+    </Dialog>
+</core:FragmentDefinition>

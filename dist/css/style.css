@@ -1,0 +1,293 @@
+/* Enter your custom styles here */
+.sapMShellBrandingBar {
+    display: none;
+}
+
+.sap-page .sapMFlexItem {
+	height: 100%;
+}
+
+.sapMShellCentralBox {
+    width: 100% !important;
+    height: 100% !important;
+    margin-left: 0px !important;
+    left: 0 !important;
+}
+
+.sapMLIB.sapMLIBSelected {
+    /* background: #cadaeb !important; */
+    /* border: 2.5px solid #607d8b30 !important; */
+    border: 2.5px solid #fff !important;
+}
+
+.sapMLIB {
+    border-bottom: none !important;
+}
+
+.box-shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.box-shadow-btn .sapMBtnInner {
+    box-shadow: 0 2.5px 5px 0 rgba(0, 0, 0, 0.1), 0 2.5px 5px 0 rgba(0, 0, 0, 0.15);
+}
+
+.box-shadow-list .sapMLIB {
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.19);
+    /* margin-bottom: 0.5rem !important; */
+}
+
+.vbox-white-bg {
+    background-color: #fff;
+}
+
+.vbox-footer-fixed {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.sap-desktop .desktop-half-width {
+    width: 50% !important;
+}
+
+.sap-desktop .block-cell-height {
+    height: calc(100vh - 12.5em);
+}
+
+/*dashboard fragment*/
+
+.dashboard-heading {
+    font-size: 27px;
+    color: #002750;
+    letter-spacing: 0;
+    margin-right: 30px;
+    font-weight: 700;
+}
+
+.dashboard-heading:before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 68px;
+    height: 5px;
+    background: #fedf01;
+    top: 37px;
+}
+
+.block-title .sapUiBlockCellTitle {
+    font-size: 27px;
+    color: #002750;
+    letter-spacing: 0;
+    margin-right: 30px;
+    font-weight: 700;
+}
+
+.block-title-underline .sapUiBlockCellTitle:before {
+    content: '';
+    position: relative;
+    display: block;
+    width: 68px;
+    height: 5px;
+    background: #fedf01;
+    top: 37px;
+}
+
+.dashboard-container-bg {
+    background-color: rgb(247, 247, 247);
+}
+
+.dashboard-due-date-color {
+    font-size: 15px;
+    font-weight: 600;
+    color: #28a745;
+    letter-spacing: 0.5px;
+}
+
+.dashboard-tile-table .sapUiBlockCellContent {
+    padding: 2rem 1rem !important;
+}
+
+
+/*dashboard fragment*/
+
+
+/*rules fragment*/
+
+.sap-desktop .dashboard-banner-fileUploader {
+    width: 50% !important;
+}
+
+/*rules fragment*/
+
+
+/*payrent fragment*/
+
+.payrent-icon-tab-bar .sapMITBScrollContainer {
+    margin-left: 0;
+}
+
+/* .payrent-currency .sapUiUfdCurrencyCurrency {
+
+} */
+
+/*payrent fragment*/
+
+@media (min-width: 64rem) {
+    .welcomeImageCell:before {
+        padding-top: 19.5%;
+    }
+}
+
+.welcomeImageCell:before {
+    content: '';
+    display: block;
+    float: left;
+}
+
+.welcomeImage {
+    height: 50%;
+}
+
+.welcomeImageCell {
+    position: relative;
+}
+
+.welcomeLandingImageCell {
+    line-height: 0;
+}
+
+@media (min-width: 90rem) {
+    .welcomeImageTextHeadline {
+        font-size: 4rem;
+        margin-bottom: 2rem;
+    }
+}
+
+.welcomeImageTextHeadline {
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.welcomeImageTextHeadline {
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 0 0 0.125rem #000;
+}
+
+@media (min-width: 90rem) {
+    .welcomeImageTextLayout {
+        margin-top: -10rem;
+    }
+}
+
+.welcomeImageTextLayout {
+    position: absolute;
+    top: 70%;
+    left: 0;
+    margin-top: -9rem;
+}
+
+.sale-value {
+    text-align: left;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.sale-description {
+    text-align: left;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.sale-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    margin-right: 0.7rem;
+    height: 100%;
+}
+
+.sale-title {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.sale-list-item-value {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-right: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.sale-list-item-desc {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.dashboard-sales {
+    height: 30rem;
+}
+
+.billing-order-table .sapMListFtr {
+    text-align: right;
+    padding-right: 3.0rem;
+    height: 3rem;
+    line-height: 3rem;
+}
+
+.bold-txt {
+    font-weight: 600;
+}
+
+.sap-desktop .database-dialog {
+    width: 50rem;
+    height: 25rem;
+}
+
+.sap-desktop .item-dialog {
+    width: 75rem;
+    /* height: 30rem; */
+}
+
+.sap-desktop .database-dialog .sapMDialogSection{
+    height: 100% !important;
+}
+
+.sap-desktop .database-dialog .sapMDialogScroll{
+    height: 100% !important;
+}
+
+.sap-desktop .database-dialog .sapMDialogScrollCont{
+    height: 100% !important;
+}
+
+.sap-desktop .database-dialog .sapUiBlockLayout{
+    height: 100% !important;
+}
+
+.sap-desktop .database-dialog .sapUiBlockLayoutRow{
+    height: 100% !important;
+}
+
+.sap-desktop .database-dialog .sapUiBlockLayoutRow > div:first-child{
+    height: 100% !important;
+}
+
+.currency-text .sapUiUfdCurrencyCurrency{
+    margin-left: 0.5rem;
+}
+
+.no-data-hbox .sapMFlexItem{
+    width: 100%;
+    text-align: center;
+}
+.no-data-icon {
+    font-size: 5.0rem;
+}

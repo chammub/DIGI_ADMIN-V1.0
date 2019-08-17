@@ -1,0 +1,207 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form">
+    <VBox width="100%">
+        <!-- heading -->
+        <VBox class="vbox-white-bg">
+            <VBox class="sapUiSmallMargin">
+                <Label text="Billing" class="dashboard-heading" />
+            </VBox>
+        </VBox>
+
+        <!-- body -->
+        <MessageStrip text="Add items and customer address to place order" type="Success" class="sapUiSmallMargin"
+            showIcon="true" />
+
+        <l:BlockLayout background="{oViewModel>/selectedTileBackground}">
+            <l:BlockLayoutRow>
+                <l:BlockLayoutCell width="2" title="Customer Info" titleAlignment="Begin"
+                    class="block-title sapUiSmallMargin">
+                    <form:SimpleForm minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout"
+                        title="" labelSpanL="4" labelSpanM="4" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2"
+                        validateFieldGroup="onValidateFieldGroup">
+                        <form:content>
+
+                            <!-- Billing Information -->
+                            <core:Title text="Billing Information" />
+                            <Label text="Name" class="sapMLabelRequired" />
+                            <Input fieldGroupIds="Billing Information" placeholder="Name" value="{
+                                path : 'oViewModel>/BILLING_NAME',
+								type : 'sap.ui.model.type.String',
+								constraints : {
+									minLength: 1
+								}
+                            }" valueStateText="Name must not be empty." change="onInputValueChange" id="BillingName" />
+
+                            <Label text="Street No./ Name" class="sapMLabelRequired" />
+                            <Input fieldGroupIds="Billing Information" placeholder="Street No." value="{
+                                path : 'oViewModel>/BILLING_STREET_NO',
+								type : 'sap.ui.model.type.String',
+								constraints : {
+									minLength: 1
+								}
+                            }" valueStateText="Street no. must not be empty." change="onInputValueChange" id="BillingStreetNumber">
+                            <layoutData>
+                                <l:GridData span="L3 M3 S4" />
+                            </layoutData>
+                            </Input>
+                            <Input fieldGroupIds="Billing Information" placeholder="Street Name" value="{
+                                path : 'oViewModel>/BILLING_STREET',
+								type : 'sap.ui.model.type.String',
+								constraints : {
+									minLength: 1
+								}
+                            }" valueStateText="Street name must not be empty." change="onInputValueChange" id="BillingStreet">
+                            </Input>
+
+                            <Label text="City/ ZIP Code" class="sapMLabelRequired" />
+                            <Input fieldGroupIds="Billing Information" placeholder="City" value="{
+                                path : 'oViewModel>/BILLING_CITY',
+								type : 'sap.ui.model.type.String',
+								constraints : {
+									minLength: 1
+								}
+                            }" valueStateText="City must not be empty." change="onInputValueChange" id="BillingCity">
+                            </Input>
+                            <Input fieldGroupIds="Billing Information" placeholder="Zip Code" value="{
+                                path : 'oViewModel>/BILLING_ZIPCODE',
+								type : 'sap.ui.model.type.String',
+								constraints : {
+									minLength: 1
+								}
+                            }" valueStateText="Zipcode must not be empty." change="onInputValueChange" id="BillingZipCode">
+                            <layoutData>
+                                <l:GridData span="L3 M3 S4" />
+                            </layoutData>
+                            </Input>
+
+                            <Label text="Country" class="sapMLabelRequired" />
+                            <Select fieldGroupIds="Billing Information" width="100%"
+                                selectedKey="{oViewModel>/BILLING_COUNTRY}" id="BillingCountry">
+                                <items>
+                                    <core:Item text="INDIA" key="INDIA" />
+                                </items>
+                            </Select>
+
+                            <!-- Communication Info -->
+                            <core:Title text="Communication" />
+                            <Label text="Phone No" />
+                            <Input fieldGroupIds="Communication" placeholder="Phone No." type="Number" maxLength="10"
+                                value="{oViewModel>/BILLING_PHONE_NO}" id="BillingPhoneNo" />
+
+                            <Label text="E-Mail" />
+                            <Input fieldGroupIds="Communication" placeholder="Email Id" type="Email"
+                                value="{oViewModel>/BILLING_EMAIL}" id="BillingEmail" />
+
+                        </form:content>
+                    </form:SimpleForm>
+
+                </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+            <l:BlockLayoutRow>
+                <l:BlockLayoutCell width="2" title="Order Items" titleAlignment="Begin"
+                    class="block-title sapUiSmallMargin">
+                    <Table mode="Delete" items="{path: 'oViewModel>/BILLING_ITEMS', templateShareable: false}" delete="onBillingItemDelete"
+                        footerText="Grand Total:   {path: 'oViewModel>/BILLING_TOTAL_PAYABLE', type: 'sap.ui.model.type.Float', formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}}  {oViewModel>/CURRENCY}" class="billing-order-table">
+                        <headerToolbar>
+                            <Toolbar>
+                                <ToolbarSpacer />
+                                <HBox id="billing-dynamic-btn" />
+                            </Toolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column width="6%">
+                                <Text text="" />
+                            </Column>
+                            <Column minScreenWidth="Desktop" hAlign="Begin" demandPopin="true">
+                                <Text text="Item Name" />
+                            </Column>
+                            <Column width="10%" minScreenWidth="Desktop" hAlign="Center" demandPopin="true">
+                                <Text text="Collection" />
+                            </Column>
+                            <Column width="12%" minScreenWidth="Tablet" hAlign="Center" demandPopin="true">
+                                <Text text="Menu" />
+                            </Column>
+                            <Column width="6%" minScreenWidth="Tablet" hAlign="Center">
+                                <Text text="Qty" />
+                            </Column>
+                            <Column width="10%" minScreenWidth="Desktop" hAlign="End" demandPopin="true">
+                                <Text text="Net Price" />
+                            </Column>
+                            <Column width="10%" minScreenWidth="Desktop" hAlign="End" demandPopin="true">
+                                <Text text="Sale Price" />
+                            </Column>
+                            <Column width="10%" minScreenWidth="Desktop" hAlign="End" demandPopin="true">
+                                <Text text="Discount" />
+                            </Column>
+                            <Column width="10%" hAlign="End">
+                                <Text text="Total Price" />
+                                <footer>
+                                    <ObjectNumber
+                                        number="{ path: 'oViewModel>/BILLING_TOTAL_PRICE',
+                                            type: 'sap.ui.model.type.Float',
+                                            formatOptions: {
+                                                minFractionDigits: 2,
+                                                maxFractionDigits: 2
+                                            }
+                                        }"
+                                        unit="{oViewModel>/CURRENCY}"/>
+                                </footer>
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <f:Avatar src="{oViewModel>IMAGE_URL}" displaySize="S" displayShape="Square" />
+                                    <ObjectIdentifier title="{oViewModel>NAME}" text="{oViewModel>DESCRIPTION}" />
+                                    <Text text="{oViewModel>COLLECTION}" />
+                                    <Text text="{oViewModel>MENU}" />
+                                    <Input value="{oViewModel>QUANTITY}" type="Number" maxLength="2" textAlign="Center" liveChange="onBillingQuantityLiveChange" />
+                                    <ObjectNumber
+                                        number="{ path: 'oViewModel>NET_PRICE',
+                                            type: 'sap.ui.model.type.Float',
+                                            formatOptions: {
+                                                minFractionDigits: 2,
+                                                maxFractionDigits: 2
+                                            }
+                                        }"
+                                        unit="{oViewModel>/CURRENCY}"/>
+                                    <ObjectNumber
+                                        number="{ path: 'oViewModel>SALE_PRICE',
+                                            type: 'sap.ui.model.type.Float',
+                                            formatOptions: {
+                                                minFractionDigits: 2,
+                                                maxFractionDigits: 2
+                                            }
+                                        }"
+                                        unit="{oViewModel>/CURRENCY}"/>
+                                    <Text text="{oViewModel>DISCOUNT} %" />
+                                    <ObjectNumber
+                                        number="{ path: 'oViewModel>TOTAL_PRICE',
+                                            type: 'sap.ui.model.type.Float',
+                                            formatOptions: {
+                                                minFractionDigits: 2,
+                                                maxFractionDigits: 2
+                                            }
+                                        }"
+                                        unit="{oViewModel>/CURRENCY}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                    <VBox justifyContent="Start" width="100%" class="sapUiSmallMarginTop">
+                        <MessageStrip
+                            text="Delivery charge Rs.{path: 'oViewModel>/BILLING_DELIVERY_CHARGE', type: 'sap.ui.model.type.Float', formatOptions: {minFractionDigits: 1, maxFractionDigits: 1} } applicable, Total price is less than Rs.{path: 'oViewModel>/BILLING_DELIVERY_CHARGE_CHECK', type: 'sap.ui.model.type.Float', formatOptions: {minFractionDigits: 1, maxFractionDigits: 1} }"
+                            visible="{= ${oViewModel>/BILLING_TOTAL_PRICE} &lt;= ${oViewModel>/BILLING_DELIVERY_CHARGE_CHECK} }"
+                            type="Warning" showIcon="true" showCloseButton="false" class="sapUiSmallMarginTopBottom">
+                        </MessageStrip>
+                        <Button icon="sap-icon://create" text="Place Order" type="Accept" press="onBillingCreateOrder"
+                            class="box-shadow-btn" />
+                    </VBox>
+                </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+        </l:BlockLayout>
+
+        <!-- footer -->
+        <core:Fragment fragmentName="com.digiArtitus.fragment.footer" type="XML" />
+    </VBox>
+</core:FragmentDefinition>

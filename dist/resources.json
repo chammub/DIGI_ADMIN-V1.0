@@ -1,0 +1,183 @@
+{
+    "resources": [
+        {
+            "name": "fragment/banner-collection.fragment.xml"
+        },
+        {
+            "name": "model/models.js"
+        },
+        {
+            "name": "model/formatter.js"
+        },
+        {
+            "name": "model/exportTo.js"
+        },
+        {
+            "name": "controller/User.js"
+        },
+        {
+            "name": "controller/Orders.js"
+        },
+        {
+            "name": "manifest.json"
+        },
+        {
+            "name": "controller/Database.js"
+        },
+        {
+            "name": "controller/Chart.js"
+        },
+        {
+            "name": "controller/Banner.js"
+        },
+        {
+            "name": "Component.js"
+        },
+        {
+            "name": "Component-preload.js",
+            "merged": true
+        },
+        {
+            "name": "manifest-bundle.zip"
+        },
+        {
+            "name": "model/models-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "model/formatter-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "model/exportTo-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/User-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/Orders-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/Main-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/Database-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/Chart-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/Banner-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "Component-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "Component-preload-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "../../sap-ui-version.json"
+        },
+        {
+            "name": "neo-app.json"
+        },
+        {
+            "name": "di.code-validation.core_issues.json"
+        },
+        {
+            "name": "view/Main.view.xml"
+        },
+        {
+            "name": "view/login.html"
+        },
+        {
+            "name": "index.html"
+        },
+        {
+            "name": "image/login_bg.jpg"
+        },
+        {
+            "name": "i18n/i18n_en.properties",
+            "raw": "i18n/i18n.properties",
+            "locale": "_en"
+        },
+        {
+            "name": "fragment/settings.fragment.xml"
+        },
+        {
+            "name": "fragment/settings-display.fragment.xml"
+        },
+        {
+            "name": "fragment/settings-change.fragment.xml"
+        },
+        {
+            "name": "fragment/orders.fragment.xml"
+        },
+        {
+            "name": "fragment/orders-status.fragment.xml"
+        },
+        {
+            "name": "fragment/orders-display-items.fragment.xml"
+        },
+        {
+            "name": "fragment/orders-customer-info.fragment.xml"
+        },
+        {
+            "name": "fragment/main.fragment.xml"
+        },
+        {
+            "name": "fragment/footer.fragment.xml"
+        },
+        {
+            "name": "fragment/database.fragment.xml"
+        },
+        {
+            "name": "fragment/database-range.fragment.xml"
+        },
+        {
+            "name": "fragment/database-menu.fragment.xml"
+        },
+        {
+            "name": "fragment/database-item.fragment.xml"
+        },
+        {
+            "name": "fragment/database-display-item.fragment.xml"
+        },
+        {
+            "name": "fragment/database-collection.fragment.xml"
+        },
+        {
+            "name": "fragment/dashboard.fragment.xml"
+        },
+        {
+            "name": "fragment/billing.fragment.xml"
+        },
+        {
+            "name": "fragment/billing-items.fragment.xml"
+        },
+        {
+            "name": "fragment/banner.fragment.xml"
+        },
+        {
+            "name": "fragment/banner-item.fragment.xml"
+        },
+        {
+            "name": "controller/Main.controller.js"
+        },
+        {
+            "name": "css/style.css"
+        },
+        {
+            "name": "css/login.css"
+        }
+    ]
+}

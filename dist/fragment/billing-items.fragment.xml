@@ -1,0 +1,65 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.f">
+	<TableSelectDialog id="billing-select-dialog" noDataText="No Products Found" title="Select Product"
+		search="onBillingItemsDialogSearch" confirm="onBillingItemsDialogClose" cancel="onBillingItemsDialogClose"
+		items="{path:'oBillingModel>/', templateShareable: false}">
+		<columns>
+			<Column width="10%">
+				<header>
+					<Text text="" />
+				</header>
+			</Column>
+			<Column width="26%" minScreenWidth="Desktop" demandPopin="true" hAlign="Begin">
+				<header>
+					<Text text="Item Name" />
+				</header>
+			</Column>
+			<Column width="17%" minScreenWidth="Desktop" demandPopin="true" hAlign="Begin">
+				<header>
+					<Text text="Collection" />
+				</header>
+			</Column>
+			<Column width="17%" minScreenWidth="Desktop" demandPopin="true" hAlign="Begin">
+				<header>
+					<Text text="Menu" />
+				</header>
+			</Column>
+			<Column width="15%" hAlign="End">
+				<header>
+					<Text text="Net Price" />
+				</header>
+			</Column>
+			<Column width="15%" hAlign="End">
+				<header>
+					<Text text="Sale Price" />
+				</header>
+			</Column>
+		</columns>
+		<ColumnListItem>
+			<cells>
+				<f:Avatar src="{oBillingModel>IMAGE_URL}" displaySize="S" displayShape="Square"
+					class="sapUiTinyMarginEnd" />
+				<ObjectIdentifier title="{oBillingModel>NAME}" text="{oBillingModel>DESCRIPTION}" />
+				<Text text="{oBillingModel>COLLECTION}" />
+				<Text text="{oBillingModel>MENU}" />
+				<ObjectNumber
+                    number="{ path: 'oBillingModel>NET_PRICE',
+                        type: 'sap.ui.model.type.Float',
+                        formatOptions: {
+                            minFractionDigits: 2,
+                            maxFractionDigits: 2
+                        }
+                    }"
+                    unit="{oViewModel>/CURRENCY}" />
+				<ObjectNumber
+                    number="{ path: 'oBillingModel>SALE_PRICE',
+                        type: 'sap.ui.model.type.Float',
+                        formatOptions: {
+                            minFractionDigits: 2,
+                            maxFractionDigits: 2
+                        }
+                    }"
+                    unit="{oViewModel>/CURRENCY}" />
+			</cells>
+		</ColumnListItem>
+	</TableSelectDialog>
+</core:FragmentDefinition>
