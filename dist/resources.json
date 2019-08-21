@@ -1,8 +1,8 @@
 {
     "resources": [
         {
-            "name": "controller/Database-dbg.js",
-            "isDebug": true
+            "name": "Component-preload.js",
+            "merged": true
         },
         {
             "name": "model/models.js"
@@ -14,7 +14,10 @@
             "name": "model/exportTo.js"
         },
         {
-            "name": "controller/User.js"
+            "name": "manifest.json"
+        },
+        {
+            "name": "controller/Settings.js"
         },
         {
             "name": "controller/Orders.js"
@@ -26,7 +29,10 @@
             "name": "controller/Database.js"
         },
         {
-            "name": "manifest.json"
+            "name": "controller/Chart.js"
+        },
+        {
+            "name": "controller/Billing.js"
         },
         {
             "name": "controller/Banner.js"
@@ -38,11 +44,11 @@
             "name": "manifest-bundle.zip"
         },
         {
-            "name": "Component-preload.js",
-            "merged": true
+            "name": "controller/User.js"
         },
         {
-            "name": "controller/Chart.js"
+            "name": "controller/Main-dbg.controller.js",
+            "isDebug": true
         },
         {
             "name": "model/formatter-dbg.js",
@@ -57,11 +63,11 @@
             "isDebug": true
         },
         {
-            "name": "controller/Orders-dbg.js",
+            "name": "controller/Settings-dbg.js",
             "isDebug": true
         },
         {
-            "name": "controller/Main-dbg.controller.js",
+            "name": "controller/Orders-dbg.js",
             "isDebug": true
         },
         {
@@ -69,7 +75,15 @@
             "isDebug": true
         },
         {
+            "name": "controller/Database-dbg.js",
+            "isDebug": true
+        },
+        {
             "name": "controller/Chart-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/Billing-dbg.js",
             "isDebug": true
         },
         {

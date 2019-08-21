@@ -7,20 +7,7 @@
 	xmlns="sap.m">
 	
 	<Shell id="shell">
-		<App id="app">
-			<pages>
-				<Page visible="true" showHeader="false">
-					<content>
-						<VBox id="login-page" height="100%">
-							<core:HTML id="html" content="hello"/>
-						</VBox>
-						<VBox id="admin-page" height="100%" class="sap-page">
-							<core:Fragment fragmentName="com.digiArtitus.fragment.main" type="XML" /> 
-						</VBox>
-					</content>
-				</Page>
-			</pages>
-		</App>
+		<App id="app" />
 	</Shell>
 	
 </mvc:View>

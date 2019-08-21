@@ -15,7 +15,7 @@
 			<l:BlockLayoutRow>
 				<l:BlockLayoutCell width="2" title="BANNER COLLECTION" titleAlignment="Begin" class="block-title sapUiSmallMargin">
 					<VBox>
-						<List id="banner-collection-list-id" items="{ path: 'oViewModel>/BANNER_COLLECTION', templateShareable: false }" visible="{= ${oViewModel>/BANNER_COLLECTION}.length > 0 }" mode="SingleSelectMaster" itemPress="onBannerCollectionListPress" updateFinished="onListUpdateFinished" growing="true" growingThreshold="4" growingScrollToLoad="false" class="box-shadow-list sapUiMediumMarginTop">
+						<List id="banner-collection-list-id" items="{ path: 'oViewModel>/BANNER_COLLECTION', templateShareable: false }" visible="{= ${oViewModel>/BANNER_COLLECTION}.length > 0 }" mode="SingleSelectMaster" itemPress="onBannerCollectionListPress" updateFinished="onListUpdateFinished" growing="true" growingThreshold="5" growingScrollToLoad="false" class="box-shadow-list sapUiMediumMarginTop">
 							<CustomListItem type="Active" press="onBannerCollectionListPress">
 								<HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMargin">
 									<HBox alignItems="Center">
@@ -42,7 +42,7 @@
 				</l:BlockLayoutCell>
 				<l:BlockLayoutCell width="2" title="ITEMS" visible="{= ${oViewModel>/BANNER_COLLECTION}.length > 0 }" titleAlignment="Begin" class="block-title sapUiSmallMargin">
 					<VBox>
-						<List id="banner-item-list-id" items="{ path: 'oViewModel>/BANNER_ITEMS', templateShareable: false }" visible="{= ${oViewModel>/BANNER_ITEMS}.length > 0 }" mode="SingleSelectMaster" itemPress="onBannerItemListPress" updateFinished="onListUpdateFinished" growing="true" growingThreshold="4" growingScrollToLoad="false" class="box-shadow-list sapUiMediumMarginTop">
+						<List id="banner-item-list-id" items="{ path: 'oViewModel>/BANNER_ITEMS', templateShareable: false }" visible="{= ${oViewModel>/BANNER_ITEMS}.length > 0 }" mode="SingleSelectMaster" itemPress="onBannerItemListPress" updateFinished="onListUpdateFinished" growing="true" growingThreshold="10" growingScrollToLoad="false" class="box-shadow-list sapUiMediumMarginTop">
 							<CustomListItem type="Active" press="onBannerItemListPress">
 								<HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMargin">
 									<HBox alignItems="Center">

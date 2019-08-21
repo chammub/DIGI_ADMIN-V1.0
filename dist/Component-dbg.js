@@ -27,23 +27,26 @@ sap.ui.define([
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
-			
+
 			// set the nav model
 			this.setModel(models.createNavModel(), "oNavigation");
-			
+
 			// set the fixed nav model
 			this.setModel(models.createFixedNavModel(), "oFixedNavigation");
-			
+
 			// set the view model
 			this.setModel(models.createViewModel(), "oViewModel");
-			
+
 			// global functions
 			this._loadGlobalNamspaceFunctions();
-			
+
+			// prtotype functions
+			this._loadPrototypeMethods();
+
 			// initialize firebase
 			this._firebaseIntialize();
 		},
-		
+
 		/**
 		 * The component is destroyed by UI5 automatically.
 		 * In this method, the ErrorHandler is destroyed.
@@ -54,8 +57,8 @@ sap.ui.define([
 			// call the base component's destroy function
 			UIComponent.prototype.destroy.apply(this, arguments);
 		},
-		
-				/**
+
+		/**
 		 * This method can be called to determine whether the sapUiSizeCompact or sapUiSizeCozy
 		 * design mode class should be set, which influences the size appearance of some controls.
 		 * @public
@@ -76,7 +79,7 @@ sap.ui.define([
 			}
 			return this._sContentDensityClass;
 		},
-		
+
 		// create firebase interface
 		_firebaseIntialize: function () {
 			var oResourceModel = this.getModel("i18n").getResourceBundle();
@@ -92,23 +95,43 @@ sap.ui.define([
 			};
 			firebase.initializeApp(config);
 		},
-		
-		_loadGlobalNamspaceFunctions: function() {
-			var startGloabalBusyIndicator = function() {
+
+		_loadPrototypeMethods: function () {
+			String.prototype.trunc = String.prototype.trunc ||
+				function (n) {
+					return (this.length > n) ? this.substr(0, n - 1) + "&hellip;" : this;
+				};
+		},
+
+		_loadGlobalNamspaceFunctions: function () {
+			var startGloabalBusyIndicator = function () {
 				return sap.ui.core.BusyIndicator.show(0);
 			};
-			
-			var endGloabalBusyIndicator = function() {
+
+			var endGloabalBusyIndicator = function () {
 				return sap.ui.core.BusyIndicator.hide();
 			};
-			
-			var getFirestoreInstance = function() {
+
+			var getFirestoreInstance = function () {
 				return firebase.firestore();
 			};
-			
+
+			var getFormattedCurrency = function (iValue) {
+				var oLocale = new sap.ui.core.Locale("en-US");
+				var oFormatOptions = {
+					style: "short",
+					decimals: 1,
+					shortDecimals: 2
+				};
+
+				var oFloatFormat = sap.ui.core.format.NumberFormat.getFloatInstance(oFormatOptions, oLocale);
+				return oFloatFormat.format(iValue);
+			};
+
 			com.digiArtitus.StartGlobalBusyIndicator = startGloabalBusyIndicator;
 			com.digiArtitus.EndGlobalBusyIndicator = endGloabalBusyIndicator;
 			com.digiArtitus.FirestoreInstance = getFirestoreInstance;
+			com.digiArtitus.FormattedCurrency = getFormattedCurrency;
 		}
 	});
 });

@@ -1,8 +1,8 @@
 /*eslint-env es6*/
 /*global firebase, moment, _, exportFromJSON*/
 
-sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
-	function (UI5Object, MessageBox, MessageToast) {
+sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast", "com/digiArtitus/model/formatter"],
+	function (UI5Object, MessageBox, MessageToast, formatter) {
 		"use strict";
 
 		return UI5Object.extend("com.digiArtitus.controller.Orders", {
@@ -133,7 +133,7 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 						if (!this.LOAD_CHART_ONLY_ONCE) {
 							this.LOAD_CHART_ONLY_ONCE = true;
 							// update chart in dashboard
-							this._oInstance.chart.loadChart(aChartData);
+							// this._oInstance.chart.loadChart(aChartData);
 						}
 
 						// filter table
@@ -148,6 +148,145 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 
 						aFilters.push(new sap.ui.model.Filter("TIME_STAMP", "BT", oBeginDate, oEndDate));
 						oBinding.filter(aFilters);
+
+						// date instance
+						var oDateInstance = moment();
+						var isTodaySalesAvailable = parseFloat(oViewData.TODAY_TOTAL_PRICE) === 0;
+						var iLen = 0;
+						var aTopProductSales = [];
+						
+						aMenuCount = _.sortBy(aMenuCount, ["COUNT"]).reverse();
+
+						for (i = 0, iLen = aMenuCount.length; i < iLen; i++) {
+							aTopProductSales.push({
+								"Name": aMenuCount[i].MENU,
+								"Description": "",
+								"Count": aMenuCount[i].COUNT,
+								"State": "Warning"
+							});
+							
+							if(i === 4) {
+								break;
+							}
+						}
+
+						// dashboard sales model
+						oViewData.DASHBOARD_SALES = {
+							"sap.card": {
+								"type": "List",
+								"header": {
+									"type": "Numeric",
+									"data": {
+										"json": {
+											"kpiInfos": {
+												"kpi": {
+													"number": parseFloat(oViewData.TODAY_TOTAL_PRICE, 10).toFixed(2),
+													"unit": "K",
+													"trend": isTodaySalesAvailable ? "Down" : "Up",
+													"state": isTodaySalesAvailable ? "Error" : "Success",
+													"target": {
+														"number": 250,
+														"unit": "K"
+													},
+													"deviation": {
+														"number": 25
+													},
+													"details": "Q" + oDateInstance.quarter() + ", " + oDateInstance.get("year")
+												}
+											}
+										},
+										"path": "/kpiInfos/kpi"
+									},
+									"title": "Top 5 products sales",
+									"subTitle": "By average today income",
+									"unitOfMeasurement": "INR",
+									"mainIndicator": {
+										"number": "{number}",
+										"unit": "{unit}",
+										"trend": "{trend}",
+										"state": "{state}"
+									},
+									"sideIndicators": [{
+										"title": "Target",
+										"number": "{target/number}",
+										"unit": "{target/unit}"
+									}, {
+										"title": "Deviation",
+										"number": "{deviation/number}",
+										"unit": "%"
+									}],
+									"details": "{details}"
+								},
+								"content": {
+									"data": {
+										"json": aTopProductSales
+									},
+									"item": {
+										"title": "{Name}",
+										"description": "{Description}",
+										"info": {
+											"value": "{Count} No",
+											"state": "{State}"
+										}
+									}
+								}
+							}
+						};
+
+						// load latest 10 orders to display in dashboard
+						var aDashboardSaleOrder = [];
+
+						filteredTodayObjects = oViewData.ORDERS;
+
+						for (i = 0, iLen = filteredTodayObjects.length; i < iLen; i++) {
+							aDashboardSaleOrder.push({
+								"salesOrder": filteredTodayObjects[i].ORDER_ID,
+								"customerName": _(filteredTodayObjects[i].CUSTOMER.NAME).replace(/(.{15})..+/, "$1…"),
+								"netAmount": com.digiArtitus.FormattedCurrency(filteredTodayObjects[i].TOTAL_PAYABLE),
+								"status": filteredTodayObjects[i].ORDER_STATUS,
+								"statusState": formatter.orderStatus(filteredTodayObjects[i].ORDER_STATUS) // "Success"
+							});
+
+							if (i === 8) {
+								break;
+							}
+						}
+
+						// dashboard sales table
+						oViewData.DASHBOARD_SALES_TABLE = {
+							"sap.card": {
+								"type": "Table",
+								"data": {
+									"json": aDashboardSaleOrder
+								},
+								"header": {
+									"title": "Sales Orders for Surgical",
+									"subTitle": "Today",
+									"status": {
+										"text": "{headerData/statusText}"
+									}
+								},
+								"content": {
+									"row": {
+										"columns": [{
+											"title": "Sales Order",
+											"value": "{salesOrder}",
+											"identifier": true
+										}, {
+											"title": "Customer",
+											"value": "{customerName}"
+										}, {
+											"title": "Net Amount",
+											"value": "{netAmount}"
+										}, {
+											"title": "Status",
+											"value": "{status}",
+											"state": "{statusState}"
+										}]
+									}
+								}
+							}
+						};
 
 						// update model data
 						this.oViewModel.refresh();
@@ -219,6 +358,165 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 					fileName: fileName,
 					exportType: exportType
 				});
+			},
+
+			_customerInfoDialog: function () {
+				if (!this.customerInfoDialog) {
+					var oView = this._oView;
+					this.customerInfoDialog = sap.ui.xmlfragment(oView.getId(), "com.digiArtitus.fragment.orders-customer-info", this);
+					oView.addDependent(this.customerInfoDialog);
+					// sync compact style
+					jQuery.sap.syncStyleClass("sapUiSizeCompact", oView, this.customerInfoDialog);
+				}
+				return this.customerInfoDialog;
+			},
+
+			onOrderTypePress: function (oEvent) {
+				var oSource = oEvent.getSource();
+				var oData = oEvent.getSource().getBindingContext("oViewModel").getObject();
+				var mCustomerData = [{
+					pageId: "employeePageId",
+					header: "Customer Info",
+					icon: "sap-icon://customer",
+					title: oData.CUSTOMER.NAME,
+					description: "Customer",
+					groups: [{
+						heading: "Contact Details",
+						elements: [{
+							label: "Phone",
+							value: "+91" + oData.CUSTOMER.PHONE_NO,
+							elementType: sap.m.QuickViewGroupElementType.phone
+						}, {
+							label: "Email",
+							value: oData.CUSTOMER.EMAIL_ID,
+							emailSubject: "Subject",
+							elementType: sap.m.QuickViewGroupElementType.email
+						}, {
+							label: "Address",
+							value: oData.CUSTOMER.ADDRESS + ", " + oData.CUSTOMER.CITY + ", " + oData.CUSTOMER.STATE + ", " + oData.CUSTOMER.COUNTRY +
+								".",
+							elementType: sap.m.QuickViewGroupElementType.text
+						}]
+					}]
+				}];
+
+				this.oViewModel.setProperty("/ORDER_CUSTOMER_INFO", mCustomerData);
+
+				// delay because addDependent will do a async rerendering and the actionSheet will immediately close without it.
+				jQuery.sap.delayedCall(0, this, function () {
+					this._customerInfoDialog().openBy(oSource);
+				});
+			},
+
+			_orderStatusDialog: function () {
+				if (!this.orderStatusDialog) {
+					var oView = this._oView;
+					this.orderStatusDialog = sap.ui.xmlfragment(oView.getId(), "com.digiArtitus.fragment.order-status", this);
+					oView.addDependent(this.orderStatusDialog);
+					// sync compact style
+					jQuery.sap.syncStyleClass("sapUiSizeCompact", oView, this.orderStatusDialog);
+				}
+				return this.orderStatusDialog;
+			},
+
+			onOrderStatusPress: function (oEvent) {
+				var oSource = oEvent.getSource();
+				var oData = oEvent.getSource().getBindingContext("oViewModel").getObject();
+
+				// set to view model
+				this.oViewModel.setProperty("/ORDER_STATUS_EDIT", oData);
+
+				if (!oData.MOMENT_TIME_STAMP.isSame(moment(), "day")) {
+					MessageToast.show("Order status for previous dates cannot be changed");
+					return;
+				}
+
+				if (oData.ORDER_STATUS.toUpperCase() === "CANCELLED") {
+					MessageToast.show("Order cancelled by the user, Status cannot be changed");
+					return;
+				}
+
+				// delay because addDependent will do a async rerendering and the actionSheet will immediately close without it.
+				jQuery.sap.delayedCall(0, this, function () {
+					this._orderStatusDialog().openBy(oSource);
+				});
+			},
+
+			onStatusChanged: function (oEvent) {
+				com.digiArtitus.StartGlobalBusyIndicator();
+				var oData = this.oViewModel.getProperty("/ORDER_STATUS_EDIT");
+				oData.DOC_REF.update({
+					"ORDER_STATUS": oEvent.getSource().data("key")
+				}).then(com.digiArtitus.EndGlobalBusyIndicator()).catch(function (e) {
+					MessageToast.show("Error in posting data");
+					com.digiArtitus.EndGlobalBusyIndicator();
+				});
+			},
+
+			onCloseDisplayItems: function () {
+				this.orderItemsDisplayDialog.close();
+			},
+
+			onOrderItemsPress: function (oEvent) {
+				var oData = oEvent.getSource().getBindingContext("oViewModel").getObject();
+				this.oViewModel.setProperty("/DISPLAY_ORDERS", oData.ITEMS);
+
+				if (!this.orderItemsDisplayDialog) {
+					var oView = this._oView;
+					this.orderItemsDisplayDialog = sap.ui.xmlfragment(oView.getId(), "com.digiArtitus.fragment.orders-display-items",
+						this);
+					oView.addDependent(this.orderItemsDisplayDialog);
+					// sync compact style
+					jQuery.sap.syncStyleClass("sapUiSizeCompact", oView, this.orderItemsDisplayDialog);
+				}
+
+				this.orderItemsDisplayDialog.open();
+			},
+
+			onOrderReceiptPress: function (oEvent) {
+				var oResourceBundle = this._oView.getModel("i18n").getResourceBundle(),
+					sLink = oResourceBundle.getText("RECEIPT_URL"),
+					oData = oEvent.getSource().getBindingContext("oViewModel").getObject(),
+					aItems = [],
+					sQuery = "",
+					sURL = "",
+					oOutput = {
+						"USER_PATH": com.digiArtitus.userId,
+						"GST_NO": oData.GST_NO,
+						"ORDER_ID": oData.ORDER_ID,
+						"COMPANY_CODE": oData.USER_COMPANY_CODE,
+						"ORDER_TYPE": oData.ORDER_TYPE,
+						"ORDER_DATE": moment(oData.TIME_STAMP).format("Do MMM YYYY"),
+						"CUSTOMER": oData.CUSTOMER,
+						"DELIVERY_CHARGE": oData.DELIVERY_CHARGE,
+						"TOTAL_PRICE": oData.TOTAL_PRICE,
+						"GRAND_TOTAL": parseFloat(oData.TOTAL_PAYABLE).toFixed(2)
+					};
+
+				// Line items header
+				aItems.push({
+					"ITEM_NAME": "Item",
+					"ITEM_DESCRIPTION": "Description",
+					"SALE_PRICE": "Unit Cost",
+					"QUANTITY": "Quantity",
+					"TOTAL_PRICE": "Line Total"
+				});
+
+				for (var i = 0, iLen = oData.ITEMS.length; i < iLen; i++) {
+					aItems.push({
+						"ITEM_NAME": oData.ITEMS[i].NAME,
+						"ITEM_DESCRIPTION": oData.ITEMS[i].DESCRIPTION,
+						"SALE_PRICE": oData.ITEMS[i].SALE_PRICE,
+						"QUANTITY": oData.ITEMS[i].QUANTITY,
+						"TOTAL_PRICE": oData.ITEMS[i].TOTAL_PRICE
+					});
+				}
+
+				oOutput.ITEMS = aItems;
+				sQuery = encodeURIComponent(JSON.stringify(oOutput));
+				sURL = sLink + sQuery;
+				sap.m.URLHelper.redirect(sURL, true);
 			}
+
 		});
 	});

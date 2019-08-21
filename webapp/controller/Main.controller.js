@@ -7,12 +7,14 @@ sap.ui.define([
 	"com/digiArtitus/controller/Chart",
 	"com/digiArtitus/controller/Database",
 	"com/digiArtitus/controller/Orders",
+	"com/digiArtitus/controller/Settings",
+	"com/digiArtitus/controller/Billing",
 	"sap/ui/model/json/JSONModel",
 	"com/digiArtitus/model/formatter",
 	"sap/ui/model/Filter",
 	"sap/m/MessageBox",
 	"sap/m/MessageToast"
-], function (Controller, User, Banner, Chart, Database, Orders, JSONModel, formatter, Filter, MessageBox, MessageToast) {
+], function (Controller, User, Banner, Chart, Database, Orders, Settings, Billing, JSONModel, formatter, Filter, MessageBox, MessageToast) {
 	"use strict";
 
 	return Controller.extend("com.digiArtitus.controller.Main", {
@@ -22,6 +24,8 @@ sap.ui.define([
 		model: new JSONModel(),
 
 		onInit: function () {
+			com.digiArtitus.StartGlobalBusyIndicator();
+
 			// apply content density mode to root view
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 
@@ -40,8 +44,16 @@ sap.ui.define([
 			// load orders object
 			this.orders = new Orders(this);
 
+			// load settings object
+			this.settings = new Settings(this);
+
+			// load billing object
+			this.billing = new Billing(this);
+
 			// load user data
 			this.user.checkForLogin().then(function () {
+				com.digiArtitus.StartGlobalBusyIndicator();
+
 				this.user.loadUserData().then(function () {
 					this.banner.liveBannerCollectionUpdates();
 					this.banner.liveBannerItemsUpdates();
@@ -49,8 +61,16 @@ sap.ui.define([
 					this.database.liveDatabaseMenuUpdates();
 					this.database.liveDatabaseItemUpdates();
 					this.orders.liveOrders();
+					this.billing.loadBillingModel();
+
+					jQuery.sap.delayedCall(1000, this, function () {
+						com.digiArtitus.EndGlobalBusyIndicator();
+					});
 				}.bind(this));
-			}.bind(this));
+			}.bind(this)).catch(function () {
+				MessageToast.show("Error in Loading");
+				com.digiArtitus.EndGlobalBusyIndicator();
+			});
 
 		},
 
@@ -81,12 +101,12 @@ sap.ui.define([
 
 			// billing page set defaults
 			if (oEvent.getParameter("item").getProperty("text") === "Billing") {
-				this._billingPageDefaults();
+				this.billing._billingPageDefaults();
 			}
 
 			// settings
 			if (oEvent.getParameter("item").getProperty("text") === "Settings") {
-				this._settingsPageDefaults();
+				this.settings._settingsPageDefaults();
 			}
 
 			var item = oEvent.getParameter("item");
@@ -233,7 +253,7 @@ sap.ui.define([
 		onItemDialogAddPress: function () {
 			this.database._itemDialog().open();
 		},
-		
+
 		onItemListPress: function (oEvent) {
 			this.database.onItemListPress(oEvent);
 		},
@@ -241,9 +261,29 @@ sap.ui.define([
 		onItemListDeletePress: function (oEvent) {
 			this._deleteEntry(oEvent, true);
 		},
-		
+
 		onItemListEditPress: function (oEvent) {
 			this.database.onItemListEditPress(oEvent);
+		},
+
+		onOrderTypePress: function (oEvent) {
+			this.orders.onOrderTypePress(oEvent);
+		},
+
+		onOrderStatusPress: function (oEvent) {
+			this.orders.onOrderStatusPress(oEvent);
+		},
+
+		onStatusChanged: function (oEvent) {
+			this.orders.onStatusChanged(oEvent);
+		},
+
+		onOrderItemsPress: function (oEvent) {
+			this.orders.onOrderItemsPress(oEvent);
+		},
+
+		onOrderReceiptPress: function (oEvent) {
+			this.orders.onOrderReceiptPress(oEvent);
 		},
 
 		onOrdersToggleBtn: function (oEvent) {
@@ -252,6 +292,51 @@ sap.ui.define([
 
 		onDataExport: function (oEvent) {
 			this.orders.ordersExport();
+		},
+
+		handleSettingsEditPress: function () {
+			this.settings.handleSettingsEditPress();
+		},
+
+		handleSettingsSavePress: function () {
+			this.settings.handleSettingsSavePress();
+		},
+
+		handleSettingsCancelPress: function () {
+			this.settings.handleSettingsSavePress();
+		},
+
+		onBillingCreateOrder: function () {
+			this.billing.onBillingCreateOrder();
+		},
+
+		onBillingQuantityLiveChange: function (oEvent) {
+			this.billing.onBillingQuantityLiveChange(oEvent);
+		},
+
+		// onChange update valueState of input
+		onInputValueChange: function (oEvent) {
+			var oInput = oEvent.getSource();
+			var oBinding = oInput.getBinding("value");
+			var sValueState = "None";
+			var bValidationError = false;
+			try {
+				oBinding.getType().validateValue(oInput.getValue());
+			} catch (oException) {
+				sValueState = "Error";
+				bValidationError = true;
+				oInput.focus();
+			}
+			oInput.setValueState(sValueState);
+			return bValidationError;
+		},
+
+		_setSelectedNavBar: function (sKey) {
+			var oView = this.getView();
+			var viewId = oView.getId();
+			var oSidePanel = oView.byId("admin-dashboard-id");
+			oSidePanel.setSelectedKey(sKey);
+			sap.ui.getCore().byId(viewId + "--pageContainer").to(viewId + "--" + sKey);
 		},
 
 		_deleteEntry: function (oEvent, bRemoveImage) {
@@ -389,6 +474,29 @@ sap.ui.define([
 			var oFilter = new Filter(sField, sap.ui.model.FilterOperator.EQ, sValue);
 			var oBinding = oList.getBinding("items");
 			oBinding.filter([oFilter]);
+		},
+
+		_logout: function () {
+			var fnWarningMessage = function () {
+				var deferred = $.Deferred();
+				var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
+				MessageBox.warning(
+					"Are you sure you want to log out? Confirm and log out.", {
+						actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
+						styleClass: bCompact ? "sapUiSizeCompact" : "",
+						onClose: function (sAction) {
+							if (sAction === "OK") {
+								deferred.resolve("logout");
+							}
+						}
+					}
+				);
+				return deferred.promise();
+			}.bind(this);
+
+			$.when(fnWarningMessage()).done(function (value) {
+				firebase.auth().signOut();
+			});
 		}
 
 	});

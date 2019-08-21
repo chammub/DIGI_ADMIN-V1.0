@@ -3,6 +3,10 @@
     display: none;
 }
 
+.label-top-margin {
+	margin-top: 0.5rem;
+}
+
 .sap-page .sapMFlexItem {
 	height: 100%;
 }

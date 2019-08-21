@@ -15,7 +15,7 @@
 			<l:BlockLayoutRow>
 				<l:BlockLayoutCell width="2" title="COLLECTION" titleAlignment="Begin" class="block-title sapUiSmallMargin">
 					<VBox>
-						<List id="collection-list-id" items="{ path: 'oViewModel>/COLLECTIONS', templateShareable: false }" visible="{= ${oViewModel>/COLLECTIONS}.length > 0 }" mode="SingleSelectMaster" itemPress="onCollectionListPress" updateFinished="onListUpdateFinished" growing="true" growingThreshold="4" growingScrollToLoad="false" class="box-shadow-list sapUiMediumMarginTop">
+						<List id="collection-list-id" items="{ path: 'oViewModel>/COLLECTIONS', templateShareable: false }" visible="{= ${oViewModel>/COLLECTIONS}.length > 0 }" mode="SingleSelectMaster" itemPress="onCollectionListPress" updateFinished="onListUpdateFinished" growing="true" growingThreshold="5" growingScrollToLoad="false" class="box-shadow-list sapUiMediumMarginTop">
 							<CustomListItem type="Active" press="onCollectionListPress">
 								<HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMargin">
 									<HBox alignItems="Center">
@@ -42,7 +42,7 @@
 				</l:BlockLayoutCell>
 				<l:BlockLayoutCell width="2" visible="{= ${oViewModel>/COLLECTIONS}.length > 0 }" title="MENU" titleAlignment="Begin" class="block-title sapUiSmallMargin">
 					<VBox>
-						<List id="menu-list-id" items="{ path: 'oViewModel>/MENU', templateShareable: false }" visible="{= ${oViewModel>/MENU}.length > 0 }" mode="SingleSelectMaster" itemPress="onMenuListPress" updateFinished="onListUpdateFinished" growing="true" growingThreshold="4" growingScrollToLoad="false" class="box-shadow-list sapUiMediumMarginTop">
+						<List id="menu-list-id" items="{ path: 'oViewModel>/MENU', templateShareable: false }" visible="{= ${oViewModel>/MENU}.length > 0 }" mode="SingleSelectMaster" itemPress="onMenuListPress" updateFinished="onListUpdateFinished" growing="true" growingThreshold="10" growingScrollToLoad="false" class="box-shadow-list sapUiMediumMarginTop">
 							<CustomListItem type="Active" press="onMenuListPress">
 								<HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMargin">
 									<HBox alignItems="Center">
@@ -69,7 +69,7 @@
 				</l:BlockLayoutCell>
 				<l:BlockLayoutCell width="2" visible="{= ${oViewModel>/MENU}.length > 0 }" title="ITEMS" titleAlignment="Begin" class="block-title sapUiSmallMargin">
 					<VBox>
-						<List id="items-list-id" items="{ path: 'oViewModel>/ITEMS', templateShareable: false }" visible="{= ${oViewModel>/ITEMS}.length > 0 }" mode="SingleSelectMaster" itemPress="onItemListPress" growing="true" growingThreshold="4" growingScrollToLoad="false" class="box-shadow-list sapUiMediumMarginTop">
+						<List id="items-list-id" items="{ path: 'oViewModel>/ITEMS', templateShareable: false }" visible="{= ${oViewModel>/ITEMS}.length > 0 }" mode="SingleSelectMaster" itemPress="onItemListPress" growing="true" growingThreshold="15" growingScrollToLoad="false" class="box-shadow-list sapUiMediumMarginTop">
 							<CustomListItem type="Active" press="onItemListPress">
 								<HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMargin">
 									<HBox alignItems="Center">

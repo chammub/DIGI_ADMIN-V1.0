@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns:core="sap.ui.core" 
     xmlns="sap.m" 
-    xmlns:l="sap.ui.layout" 
-    xmlns:viz="sap.viz.ui5.controls">
+    xmlns:l="sap.ui.layout"
+    xmlns:w="sap.ui.integration.widgets">
 
     <VBox height="100%">
 
@@ -11,44 +11,54 @@
                 <Label text="Sales" class="dashboard-heading"/>
             </VBox>
         </VBox>
-
+        
         <l:BlockLayout background="Dashboard" class="sapUiSmallMargin">
             <l:BlockLayoutRow>
-                <l:BlockLayoutCell class="dashboard-sales">
+                <l:BlockLayoutCell>
+                	
+                	<HBox>
+                		<w:Card manifest="{oViewModel>/DASHBOARD_SALES}" width="400px" height="auto" class="sapUiMediumMarginEnd" />
+                		<w:Card manifest="{oViewModel>/DASHBOARD_SALES_TABLE}" width="auto" height="auto"/>
+                	</HBox>
+                	
 
-                    <HBox width="100%" height="100%">
-                        <VBox width="40%">
-                            <HBox justifyContent="SpaceBetween" width="100%">
-                                <VBox width="100%">
-                                    <Text text="{parts:[{path: 'oViewModel>/TODAY_TOTAL_PRICE'}, {path: 'oViewModel>/CURRENCY'}], type:'sap.ui.model.type.Currency', formatOptions: {style : 'medium', decimals : 1} }" class="sale-value" />
-                                    <Text text="Net Payout" class="sale-description" />
-                                </VBox>
+                    <!--<HBox width="100%" height="100%">-->
+                    <!--    <VBox width="40%">-->
+                    <!--        <HBox justifyContent="SpaceBetween" width="100%">-->
+                    <!--            <VBox width="100%">-->
+                    <!--                <Text text="{parts:[{path: 'oViewModel>/TODAY_TOTAL_PRICE'}, {path: 'oViewModel>/CURRENCY'}], type:'sap.ui.model.type.Currency', formatOptions: {style : 'medium', decimals : 1} }" class="sale-value" />-->
+                    <!--                <Text text="Net Payout" class="sale-description" />-->
+                    <!--            </VBox>-->
 
-                                <VBox width="100%">
-                                    <HBox alignItems="Center" justifyContent="Start">
-                                        <core:Icon src="sap-icon://project-definition-triangle-2" visible="{= ${oViewModel>/PERCENTAGE_DIFFERENCE} &gt; 0}" class="sale-icon" color="#4CAF50" />
-                                        <core:Icon src="sap-icon://checklist-item-2" visible="{= ${oViewModel>/PERCENTAGE_DIFFERENCE} &lt; 0}" class="sale-icon" color="#FF0000" />
-                                        <Text text="{oViewModel>/PERCENTAGE_DIFFERENCE}%" class="sale-value" />
-                                    </HBox>
-                                    <Text text="Previous Day" class="sale-description" />
-                                </VBox>
-                            </HBox>
-                            <VBox width="100%" visible="{=${oViewModel>/TODAY_TOTAL_PRICE} !== 0.0}">
-                                <Text text="Top selling menu items current week" class="sale-title" />
-                                <List items="{ path: 'oViewModel>/MENU_COUNT', templateShareable: false }" mode="None" updateFinished="onListUpdateFinished" growing="true" growingThreshold="10" growingScrollToLoad="false">
-                                    <CustomListItem type="Inactive">
-                                        <HBox alignItems="Center">
-                                            <Text text="{oViewModel>COUNT}" class="sale-list-item-value" />
-                                            <Text text="{oViewModel>MENU}" class="sale-list-item-desc" />
-                                        </HBox>
-                                    </CustomListItem>
-                                </List>
-                            </VBox>
-                        </VBox>
-                        <VBox id="dashBoard-chart" width="60%" height="100%" class="sapUiTinyMarginTop" />
-                    </HBox>
-
+                    <!--            <VBox width="100%">-->
+                    <!--                <HBox alignItems="Center" justifyContent="Start">-->
+                    <!--                    <core:Icon src="sap-icon://project-definition-triangle-2" visible="{= ${oViewModel>/PERCENTAGE_DIFFERENCE} &gt; 0}" class="sale-icon" color="#4CAF50" />-->
+                    <!--                    <core:Icon src="sap-icon://checklist-item-2" visible="{= ${oViewModel>/PERCENTAGE_DIFFERENCE} &lt; 0}" class="sale-icon" color="#FF0000" />-->
+                    <!--                    <Text text="{oViewModel>/PERCENTAGE_DIFFERENCE}%" class="sale-value" />-->
+                    <!--                </HBox>-->
+                    <!--                <Text text="Previous Day" class="sale-description" />-->
+                    <!--            </VBox>-->
+                    <!--        </HBox>-->
+                    <!--        <VBox width="100%" visible="{=${oViewModel>/TODAY_TOTAL_PRICE} !== 0.0}">-->
+                    <!--            <Text text="Top selling menu items current week" class="sale-title" />-->
+                    <!--            <List items="{ path: 'oViewModel>/MENU_COUNT', templateShareable: false }" mode="None" updateFinished="onListUpdateFinished" growing="true" growingThreshold="10" growingScrollToLoad="false">-->
+                    <!--                <CustomListItem type="Inactive">-->
+                    <!--                    <HBox alignItems="Center">-->
+                    <!--                        <Text text="{oViewModel>COUNT}" class="sale-list-item-value" />-->
+                    <!--                        <Text text="{oViewModel>MENU}" class="sale-list-item-desc" />-->
+                    <!--                    </HBox>-->
+                    <!--                </CustomListItem>-->
+                    <!--            </List>-->
+                    <!--        </VBox>-->
+                    <!--    </VBox>-->
+                    <!--    <VBox id="dashBoard-chart" width="60%" height="100%" class="sapUiTinyMarginTop" />-->
+                    <!--</HBox>-->
+					
                 </l:BlockLayoutCell>
+                
+                <!--<l:BlockLayoutCell class="dashboard-sales">-->
+                	
+                <!--</l:BlockLayoutCell>-->
             </l:BlockLayoutRow>
         </l:BlockLayout>
     </VBox>

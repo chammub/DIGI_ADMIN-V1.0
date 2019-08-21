@@ -18,6 +18,6 @@
         <!-- body -->
         <VBox id="settings-page-content" />
         <!-- footer -->
-        <core:Fragment fragmentName="com.digiArtitus.fragment.footer" type="XML" class="vbox-footer-fixed" />
+        <!--<core:Fragment fragmentName="com.digiArtitus.fragment.footer" type="XML" class="vbox-footer-fixed" />-->
     </VBox>
 </core:FragmentDefinition>

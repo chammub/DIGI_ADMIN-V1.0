@@ -77,7 +77,7 @@
             <f:formContainers>
                 <f:FormContainer title="Delivery details">
                     <f:formElements>
-                        <f:FormElement label="SMS Notification" class="sapUiTinyMarginTop">
+                        <f:FormElement label="SMS Notification">
                             <f:fields>
                             	<Switch state="{oSettingsModel>/SMS_NOTIFICATION}" enabled="false" />
                             </f:fields>
