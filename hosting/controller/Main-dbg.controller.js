@@ -473,7 +473,11 @@ sap.ui.define([
 			var oList = this.getView().byId(sId);
 			var oFilter = new Filter(sField, sap.ui.model.FilterOperator.EQ, sValue);
 			var oBinding = oList.getBinding("items");
-			oBinding.filter([oFilter]);
+			if (sValue === "ALL") {
+				oBinding.filter([]);
+			} else {
+				oBinding.filter([oFilter]);
+			}
 		},
 
 		_logout: function () {

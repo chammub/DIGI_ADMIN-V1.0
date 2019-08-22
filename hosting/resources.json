@@ -14,7 +14,7 @@
             "name": "model/exportTo.js"
         },
         {
-            "name": "manifest.json"
+            "name": "controller/User.js"
         },
         {
             "name": "controller/Settings.js"
@@ -26,7 +26,7 @@
             "name": "controller/Main.controller.js"
         },
         {
-            "name": "controller/Database.js"
+            "name": "manifest.json"
         },
         {
             "name": "controller/Chart.js"
@@ -44,10 +44,10 @@
             "name": "manifest-bundle.zip"
         },
         {
-            "name": "controller/User.js"
+            "name": "controller/Database.js"
         },
         {
-            "name": "controller/Main-dbg.controller.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
@@ -71,7 +71,7 @@
             "isDebug": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "controller/Main-dbg.controller.js",
             "isDebug": true
         },
         {
