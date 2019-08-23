@@ -411,7 +411,7 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast", "
 			_orderStatusDialog: function () {
 				if (!this.orderStatusDialog) {
 					var oView = this._oView;
-					this.orderStatusDialog = sap.ui.xmlfragment(oView.getId(), "com.digiArtitus.fragment.order-status", this);
+					this.orderStatusDialog = sap.ui.xmlfragment(oView.getId(), "com.digiArtitus.fragment.orders-status", this);
 					oView.addDependent(this.orderStatusDialog);
 					// sync compact style
 					jQuery.sap.syncStyleClass("sapUiSizeCompact", oView, this.orderStatusDialog);

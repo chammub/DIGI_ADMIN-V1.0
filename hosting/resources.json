@@ -1,8 +1,7 @@
 {
     "resources": [
         {
-            "name": "Component-preload.js",
-            "merged": true
+            "name": "fragment/banner-collection.fragment.xml"
         },
         {
             "name": "model/models.js"
@@ -26,13 +25,13 @@
             "name": "controller/Main.controller.js"
         },
         {
-            "name": "manifest.json"
+            "name": "controller/Database.js"
         },
         {
             "name": "controller/Chart.js"
         },
         {
-            "name": "controller/Billing.js"
+            "name": "manifest.json"
         },
         {
             "name": "controller/Banner.js"
@@ -44,10 +43,11 @@
             "name": "manifest-bundle.zip"
         },
         {
-            "name": "controller/Database.js"
+            "name": "Component-preload.js",
+            "merged": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "controller/Database-dbg.js",
             "isDebug": true
         },
         {
@@ -75,7 +75,7 @@
             "isDebug": true
         },
         {
-            "name": "controller/Database-dbg.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
@@ -181,7 +181,7 @@
             "name": "fragment/banner-item.fragment.xml"
         },
         {
-            "name": "fragment/banner-collection.fragment.xml"
+            "name": "controller/Billing.js"
         },
         {
             "name": "css/style.css"
