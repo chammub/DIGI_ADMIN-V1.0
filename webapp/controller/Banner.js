@@ -93,7 +93,7 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 					MessageToast.show("A validation error has occurred. Complete your input first");
 					return;
 				}
-				
+
 				com.digiArtitus.StartGlobalBusyIndicator();
 
 				var docData = {
@@ -106,18 +106,19 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 						this._bannerCollectionDialog().close();
 						this.BANNER_COLLECTION_EDIT_FLAG = false;
 						oViewData.BANNER_COLLECTION_NAME = "";
-						
+
 						this.oViewModel.refresh();
-						
+
 						com.digiArtitus.EndGlobalBusyIndicator();
 					}.bind(this)).catch(function (e) {
 						MessageToast.show("Error in posting data");
-						
+
 						com.digiArtitus.EndGlobalBusyIndicator();
 					});
 				} else {
 					docData.USER_ID = com.digiArtitus.userId;
-					firebase.firestore().collection("DATABASE").doc(com.digiArtitus.companyCode).collection("BANNER_COLLECTION").add(docData).then(
+					com.digiArtitus.FirestoreInstance().collection("DATABASE").doc(com.digiArtitus.companyCode).collection("BANNER_COLLECTION").add(
+						docData).then(
 						function () {
 							oViewData.BANNER_COLLECTION_NAME = "";
 							this.oViewModel.refresh();
@@ -155,21 +156,21 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 					MessageToast.show("A validation error has occurred. Complete your input first");
 					return;
 				}
-				
+
 				com.digiArtitus.StartGlobalBusyIndicator();
 
 				var fnSuccess = function () {
 					this._bannerItemDialog().close();
-					
+
 					// clear all property
 					this.onBannerItemRemoveImagePress();
-					
+
 					oViewData.BANNER_ITEM_UPLOADER_EDIT_CHANGE_FLAG = false;
 					oViewData.BANNER_ITEM_NAME = "";
-					
+
 					// update model data
 					this.oViewModel.refresh();
-					
+
 					com.digiArtitus.EndGlobalBusyIndicator();
 				}.bind(this);
 
@@ -232,7 +233,8 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 					oImagesRef.put(oFile).then((snapshot) => {
 						snapshot.ref.getDownloadURL().then((url) => {
 							docData.IMAGE_URL = url;
-							this.getFirestoreInstance().collection("DATABASE").doc(com.digiArtitus.companyCode).collection("BANNER_ITEMS").add(docData)
+							com.digiArtitus.FirestoreInstance().collection("DATABASE").doc(com.digiArtitus.companyCode).collection("BANNER_ITEMS").add(
+									docData)
 								.then(fnSuccess).catch(function (e) {
 									MessageToast.show("Error in posting data");
 									com.digiArtitus.EndGlobalBusyIndicator();

@@ -1,7 +1,7 @@
 {
     "resources": [
         {
-            "name": "fragment/banner-collection.fragment.xml"
+            "name": "fragment/settings-change.fragment.xml"
         },
         {
             "name": "model/models.js"
@@ -13,7 +13,7 @@
             "name": "model/exportTo.js"
         },
         {
-            "name": "controller/User.js"
+            "name": "manifest.json"
         },
         {
             "name": "controller/Settings.js"
@@ -31,7 +31,7 @@
             "name": "controller/Chart.js"
         },
         {
-            "name": "manifest.json"
+            "name": "controller/Billing.js"
         },
         {
             "name": "controller/Banner.js"
@@ -47,7 +47,7 @@
             "merged": true
         },
         {
-            "name": "controller/Database-dbg.js",
+            "name": "controller/Main-dbg.controller.js",
             "isDebug": true
         },
         {
@@ -71,11 +71,11 @@
             "isDebug": true
         },
         {
-            "name": "controller/Main-dbg.controller.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "controller/Database-dbg.js",
             "isDebug": true
         },
         {
@@ -127,7 +127,7 @@
             "name": "fragment/settings-display.fragment.xml"
         },
         {
-            "name": "fragment/settings-change.fragment.xml"
+            "name": "controller/User.js"
         },
         {
             "name": "fragment/orders.fragment.xml"
@@ -181,7 +181,7 @@
             "name": "fragment/banner-item.fragment.xml"
         },
         {
-            "name": "controller/Billing.js"
+            "name": "fragment/banner-collection.fragment.xml"
         },
         {
             "name": "css/style.css"
