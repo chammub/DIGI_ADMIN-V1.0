@@ -1,10 +1,10 @@
 {
     "resources": [
         {
-            "name": "../../sap-ui-version.json"
+            "name": "model/models.js"
         },
         {
-            "name": "model/models.js"
+            "name": "Component.js"
         },
         {
             "name": "model/formatter.js"
@@ -47,7 +47,7 @@
             "merged": true
         },
         {
-            "name": "controller/Banner-dbg.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
@@ -87,7 +87,7 @@
             "isDebug": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "controller/Banner-dbg.js",
             "isDebug": true
         },
         {
@@ -95,7 +95,7 @@
             "isDebug": true
         },
         {
-            "name": "Component.js"
+            "name": "../../sap-ui-version.json"
         },
         {
             "name": "neo-app.json"

@@ -162,7 +162,7 @@ sap.ui.define([
 
 		onBannerCollectionListPress: function (oEvent) {
 			var oData = oEvent.getParameter("listItem").getBindingContext("oViewModel").getObject();
-			this.getView().getModel("oViewModel").setProperty("/BANNER_COLLECTION_NAME", oData.NAME);
+			this.getView().getModel("oViewModel").setProperty("/SELECTED_BANNER_COLL_NAME", oData.NAME);
 			this._listItemFilter("banner-item-list-id", "BANNER_COLLECTION", oData.NAME);
 		},
 
