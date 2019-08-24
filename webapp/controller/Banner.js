@@ -34,13 +34,13 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 					this.oViewModel.refresh();
 				}.bind(this);
 
-				this._oInstance.bannerCollectionUnsubscribe = 
+				this._oInstance.bannerCollectionUnsubscribe =
 					com.digiArtitus
-						.FirestoreInstance()
-						.collection("DATABASE")
-						.doc(com.digiArtitus.companyCode)
-						.collection("BANNER_COLLECTION")
-						.onSnapshot(fnSuccess);
+					.FirestoreInstance()
+					.collection("DATABASE")
+					.doc(com.digiArtitus.companyCode)
+					.collection("BANNER_COLLECTION")
+					.onSnapshot(fnSuccess);
 			},
 
 			liveBannerItemsUpdates: function () {
@@ -61,6 +61,14 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 						});
 					});
 
+					// sort by name
+					aData.sort(function (a, b) {
+						if (a.NAME < b.NAME) {
+							return -1;
+						}
+						return 0;
+					});
+
 					// update banner data
 					oViewData.BANNER_ITEMS = aData;
 
@@ -68,13 +76,13 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 					this.oViewModel.refresh();
 				}.bind(this);
 
-				this._oInstance.bannerItemUnsubscribe = 
+				this._oInstance.bannerItemUnsubscribe =
 					com.digiArtitus
-						.FirestoreInstance()
-						.collection("DATABASE")
-						.doc(com.digiArtitus.companyCode)
-						.collection("BANNER_ITEMS")
-						.onSnapshot(fnSuccess);
+					.FirestoreInstance()
+					.collection("DATABASE")
+					.doc(com.digiArtitus.companyCode)
+					.collection("BANNER_ITEMS")
+					.onSnapshot(fnSuccess);
 			},
 
 			onBannerCollectionSave: function () {

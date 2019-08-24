@@ -1,10 +1,11 @@
 {
     "resources": [
         {
-            "name": "model/models.js"
+            "name": "controller/Billing-dbg.js",
+            "isDebug": true
         },
         {
-            "name": "Component.js"
+            "name": "model/models.js"
         },
         {
             "name": "model/formatter.js"
@@ -37,7 +38,7 @@
             "name": "controller/Banner.js"
         },
         {
-            "name": "manifest.json"
+            "name": "Component.js"
         },
         {
             "name": "manifest-bundle.zip"
@@ -47,7 +48,7 @@
             "merged": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "controller/Database-dbg.js",
             "isDebug": true
         },
         {
@@ -79,12 +80,11 @@
             "isDebug": true
         },
         {
-            "name": "controller/Database-dbg.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
-            "name": "controller/Billing-dbg.js",
-            "isDebug": true
+            "name": "manifest.json"
         },
         {
             "name": "controller/Banner-dbg.js",
