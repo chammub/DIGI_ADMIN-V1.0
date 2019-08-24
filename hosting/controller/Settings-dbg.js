@@ -1,4 +1,5 @@
 /*eslint-env es6*/
+/*eslint-disable consistent-return*/
 
 sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 	function (UI5Object, MessageBox, MessageToast) {
@@ -12,6 +13,21 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 				this._oInstance = oInstance;
 				this._oView = oInstance.getView();
 				this.oViewModel = this._oView.getModel("oViewModel");
+				
+				var oViewData = this.oViewModel.getData();
+				
+				// state model
+				var aStateData = [];
+				aStateData.push({"key":"AP", "text":"Andhra Pradesh - (A.P)"});
+				oViewData.STATE_LIST = aStateData;
+				
+				// country model
+				var aCountryData = [];
+				aCountryData.push({"key":"IN", "text":"India"});
+				oViewData.COUNTRY_LIST = aCountryData;
+				
+				// update bindings
+				this.oViewModel.refresh();
 			},
 
 			_loadFormValues: function (querySnapshot) {
@@ -60,11 +76,13 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 							// office details
 							"GST_NO": oData.GST_NO,
 							"USER_NAME": oData.USER_NAME,
+							"USER_DESCRIPTION": oData.USER_DESCRIPTION,
 							"BILLING_STREET_NO": oData.BILLING_STREET_NO,
 							"BILLING_STREET": oData.BILLING_STREET,
-							"BILLING_ZIPCODE": oData.BILLING_ZIPCODE,
 							"BILLING_CITY": oData.BILLING_CITY,
+							"BILLING_STATE": oData.BILLING_STATE,
 							"BILLING_COUNTRY": oData.BILLING_COUNTRY,
+							"BILLING_ZIPCODE": oData.BILLING_ZIPCODE,
 
 							// other
 							"USER_PIC": oData.USER_PIC,
@@ -76,6 +94,8 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 							"FACEBOOK": oData.FACEBOOK,
 							"YOUTUBE": oData.YOUTUBE,
 							"INSTAGRAM": oData.INSTAGRAM,
+							"GOOGLE_MAPS_LOCATION": oData.GOOGLE_MAPS_LOCATION,
+							"SHARE_MESSAGE": oData.SHARE_MESSAGE,
 
 							// Delivery details
 							"BILLING_DELIVERY_CHARGE": oData.BILLING_DELIVERY_CHARGE,

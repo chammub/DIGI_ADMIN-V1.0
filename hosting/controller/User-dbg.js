@@ -1,6 +1,7 @@
 /*eslint-env es6*/
 /*global firebase*/
 /*eslint quotes: ["error", "single"]*/
+/* eslint-disable sap-no-location-reload */
 
 sap.ui.define(['sap/ui/base/Object', 'sap/m/MessageBox', 'sap/m/MessageToast'], function (UI5Object, MessageBox, MessageToast) {
 	'use strict';
@@ -10,6 +11,7 @@ sap.ui.define(['sap/ui/base/Object', 'sap/m/MessageBox', 'sap/m/MessageToast'], 
 		constructor: function (oInstance) {
 			this._oInstance = oInstance;
 			this._oView = oInstance.getView();
+			this.oViewModel = this._oView.getModel('oViewModel');
 			// load html content
 			this._loadLoginHtml();
 		},
@@ -91,12 +93,25 @@ sap.ui.define(['sap/ui/base/Object', 'sap/m/MessageBox', 'sap/m/MessageToast'], 
 						content: oPageContent
 					}));
 
+					// reload objects
+					if (com.digiArtitus.LoggedIn) {
+						this._oInstance._loadPageControls();
+						return;
+					} else if(com.digiArtitus.LoggedOff) {
+						com.digiArtitus.EndGlobalBusyIndicator();
+						return;
+					}
+
+					// end busy indicator on fresh loads
+					if (!com.digiArtitus.LoggedIn || !com.digiArtitus.LoggedOff) {
+						com.digiArtitus.EndGlobalBusyIndicator();
+					}
+
 					if (bFlag) {
 						reject();
 					} else {
 						resolve();
 					}
-
 				}.bind(this));
 			}.bind(this));
 		},
@@ -116,8 +131,13 @@ sap.ui.define(['sap/ui/base/Object', 'sap/m/MessageBox', 'sap/m/MessageToast'], 
 					com.digiArtitus.billingZipcode = oData.BILLING_ZIPCODE;
 					com.digiArtitus.billingDeliveryCharge = oData.BILLING_DELIVERY_CHARGE;
 					com.digiArtitus.billingDeliveryCheck = oData.BILLING_DELIVERY_CHECK;
+
+					// set company name in name and pic
+					this.oViewModel.setProperty('/COMPANY_NAME', oData.USER_NAME);
+					this.oViewModel.setProperty('/COMPANY_PIC', oData.USER_PIC);
+
 					resolve();
-				};
+				}.bind(this);
 
 				firebase
 					.firestore()
@@ -125,7 +145,7 @@ sap.ui.define(['sap/ui/base/Object', 'sap/m/MessageBox', 'sap/m/MessageToast'], 
 					.doc(com.digiArtitus.userId)
 					.get()
 					.then(fnSuccess);
-			});
+			}.bind(this));
 		},
 
 		/* =========================================================== */
@@ -188,9 +208,14 @@ sap.ui.define(['sap/ui/base/Object', 'sap/m/MessageBox', 'sap/m/MessageToast'], 
 						return;
 					}
 
+					// start busy indicator
+					com.digiArtitus.StartGlobalBusyIndicator();
+
 					// navigation
 					var that = this;
-					firebase.auth().signInWithEmailAndPassword(this.USER_NAME, this.PASSWORD).catch(function (error) {
+					firebase.auth().signInWithEmailAndPassword(this.USER_NAME, this.PASSWORD).then(function () {
+						com.digiArtitus.LoggedIn = true;
+					}).catch(function (error) {
 						// Handle Errors here.
 						// var errorCode = error.code;
 						var errorMessage = error.message;

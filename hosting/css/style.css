@@ -1,14 +1,19 @@
 /* Enter your custom styles here */
+
 .sapMShellBrandingBar {
     display: none;
 }
 
+.tnt-header {
+    color: #d1e8ff !important;
+}
+
 .label-top-margin {
-	margin-top: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 .sap-page .sapMFlexItem {
-	height: 100%;
+    height: 100%;
 }
 
 .sapMShellCentralBox {
@@ -58,6 +63,7 @@
 .sap-desktop .block-cell-height {
     height: calc(100vh - 12.5em);
 }
+
 
 /*dashboard fragment*/
 
@@ -122,6 +128,7 @@
     width: 50% !important;
 }
 
+
 /*rules fragment*/
 
 
@@ -131,9 +138,11 @@
     margin-left: 0;
 }
 
+
 /* .payrent-currency .sapUiUfdCurrencyCurrency {
 
 } */
+
 
 /*payrent fragment*/
 
@@ -260,38 +269,39 @@
     /* height: 30rem; */
 }
 
-.sap-desktop .database-dialog .sapMDialogSection{
+.sap-desktop .database-dialog .sapMDialogSection {
     height: 100% !important;
 }
 
-.sap-desktop .database-dialog .sapMDialogScroll{
+.sap-desktop .database-dialog .sapMDialogScroll {
     height: 100% !important;
 }
 
-.sap-desktop .database-dialog .sapMDialogScrollCont{
+.sap-desktop .database-dialog .sapMDialogScrollCont {
     height: 100% !important;
 }
 
-.sap-desktop .database-dialog .sapUiBlockLayout{
+.sap-desktop .database-dialog .sapUiBlockLayout {
     height: 100% !important;
 }
 
-.sap-desktop .database-dialog .sapUiBlockLayoutRow{
+.sap-desktop .database-dialog .sapUiBlockLayoutRow {
     height: 100% !important;
 }
 
-.sap-desktop .database-dialog .sapUiBlockLayoutRow > div:first-child{
+.sap-desktop .database-dialog .sapUiBlockLayoutRow > div:first-child {
     height: 100% !important;
 }
 
-.currency-text .sapUiUfdCurrencyCurrency{
+.currency-text .sapUiUfdCurrencyCurrency {
     margin-left: 0.5rem;
 }
 
-.no-data-hbox .sapMFlexItem{
+.no-data-hbox .sapMFlexItem {
     width: 100%;
     text-align: center;
 }
+
 .no-data-icon {
     font-size: 5.0rem;
 }

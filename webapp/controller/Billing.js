@@ -13,6 +13,7 @@ sap.ui.define(["sap/ui/base/Object", "sap/ui/model/json/JSONModel", "sap/ui/mode
 			},
 
 			loadBillingModel: function () {
+				this._oInstance.billingUnsubscribe =
 				com.digiArtitus
 					.FirestoreInstance()
 					.collection("DATABASE")
@@ -33,7 +34,8 @@ sap.ui.define(["sap/ui/base/Object", "sap/ui/model/json/JSONModel", "sap/ui/mode
 								.doc(com.digiArtitus.companyCode)
 								.collection("ITEMS")
 								.where("COLLECTION", "==", aCollectionData[i].NAME)
-								.onSnapshot(function (querySnapshotItem) {
+								.get()
+								.then(function (querySnapshotItem) {
 									var aData = [];
 									querySnapshotItem.forEach(function (doc) {
 										if (doc.data().ACTIVE) {

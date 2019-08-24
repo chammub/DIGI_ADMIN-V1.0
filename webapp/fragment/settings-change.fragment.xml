@@ -23,6 +23,11 @@
 								<Input value="{oSettingsModel>/USER_NAME}" />
 							</f:fields>
 						</f:FormElement>
+						<f:FormElement label="Description">
+							<f:fields>
+								<Input value="{oSettingsModel>/USER_DESCRIPTION}" />
+							</f:fields>
+						</f:FormElement>
 						<f:FormElement label="Street">
 							<f:fields>
 								<Input value="{oSettingsModel>/BILLING_STREET_NO}">
@@ -43,11 +48,20 @@
 								<Input value="{oSettingsModel>/BILLING_CITY}" />
 							</f:fields>
 						</f:FormElement>
+						<f:FormElement label="State">
+                            <f:fields>
+                            	<Select id="state" selectedKey="{oSettingsModel>/BILLING_STATE}" items="{oViewModel>/STATE_LIST}" >
+									<items>
+										<core:Item text="{oViewModel>text}" key="{oViewModel>key}"/>
+									</items>
+								</Select>
+                            </f:fields>
+                        </f:FormElement>
 						<f:FormElement label="Country">
 							<f:fields>
-								<Select id="country" selectedKey="{oSettingsModel>/BILLING_COUNTRY}">
+								<Select id="country" selectedKey="{oSettingsModel>/BILLING_COUNTRY}" items="{oViewModel>/COUNTRY_LIST}" >
 									<items>
-										<core:Item text="India" key="India"/>
+										<core:Item text="{oViewModel>text}" key="{oViewModel>key}"/>
 									</items>
 								</Select>
 							</f:fields>
@@ -92,7 +106,7 @@
 					<f:formElements>
 						<f:FormElement label="SMS Notification">
                             <f:fields>
-                            	<Switch state="{oSettingsModel>/SMS_NOTIFICATION}" />
+                            	<CheckBox selected="{path: 'oSettingsModel>/SMS_NOTIFICATION', type: 'sap.ui.model.odata.type.Boolean'}"/>
                             </f:fields>
                         </f:FormElement>
 						<f:FormElement label="Delivery charge check">
@@ -126,6 +140,20 @@
 						</f:FormElement>
 					</f:formElements>
 				</f:FormContainer>
+				<f:FormContainer title="Other details">
+                    <f:formElements>
+                        <f:FormElement label="Shop Location">
+                            <f:fields>
+                            	<TextArea growing="true" rows="4" value="{oSettingsModel>/GOOGLE_MAPS_LOCATION}" />
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Share Message/ Invite content">
+                            <f:fields>
+                                <TextArea growing="true" rows="4" value="{oSettingsModel>/SHARE_MESSAGE}" />
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
 			</f:formContainers>
 		</f:Form>
 	</VBox>

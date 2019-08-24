@@ -1,0 +1,12 @@
+<!--notification-popover.fragment.xml-->
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Popover showHeader="false" class="sapUiContentPadding" placement="Bottom" initialFocus="close">
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button id="close" text="Close" press="handleClosePress"/>
+			</Toolbar>
+		</footer>
+		<Title text="No Notifications!" visible="{= ${oViewModel>/NOTIFICATIONS}.length === 0}"/>
+	</Popover>
+</core:FragmentDefinition>

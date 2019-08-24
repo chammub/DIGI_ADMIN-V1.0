@@ -97,10 +97,6 @@ sap.ui.define([
 		},
 
 		_loadPrototypeMethods: function () {
-			String.prototype.trunc = String.prototype.trunc ||
-				function (n) {
-					return (this.length > n) ? this.substr(0, n - 1) + "&hellip;" : this;
-				};
 		},
 
 		_loadGlobalNamspaceFunctions: function () {
@@ -127,11 +123,15 @@ sap.ui.define([
 				var oFloatFormat = sap.ui.core.format.NumberFormat.getFloatInstance(oFormatOptions, oLocale);
 				return oFloatFormat.format(iValue);
 			};
-
+			
 			com.digiArtitus.StartGlobalBusyIndicator = startGloabalBusyIndicator;
 			com.digiArtitus.EndGlobalBusyIndicator = endGloabalBusyIndicator;
 			com.digiArtitus.FirestoreInstance = getFirestoreInstance;
 			com.digiArtitus.FormattedCurrency = getFormattedCurrency;
+			
+			// variables
+			com.digiArtitus.LoggedIn = false;
+			com.digiArtitus.LoggedOff = false;
 		}
 	});
 });

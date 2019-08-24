@@ -36,11 +36,11 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 					oViewModel.refresh();
 				}.bind(this);
 
-				com.digiArtitus.FirestoreInstance()
-					.collection("DATABASE")
-					.doc(com.digiArtitus.companyCode)
-					.collection("COLLECTION")
-					.onSnapshot(fnSuccess);
+				this._oInstance.databaseCollectionUnsubscribe = com.digiArtitus.FirestoreInstance()
+																	.collection("DATABASE")
+																	.doc(com.digiArtitus.companyCode)
+																	.collection("COLLECTION")
+																	.onSnapshot(fnSuccess);
 			},
 
 			liveDatabaseMenuUpdates: function () {
@@ -70,11 +70,11 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 					oViewModel.refresh();
 				}.bind(this);
 
-				com.digiArtitus.FirestoreInstance()
-					.collection("DATABASE")
-					.doc(com.digiArtitus.companyCode)
-					.collection("MENU")
-					.onSnapshot(fnSuccess);
+				this._oInstance.databaseMenuUnsubscribe = com.digiArtitus.FirestoreInstance()
+															.collection("DATABASE")
+															.doc(com.digiArtitus.companyCode)
+															.collection("MENU")
+															.onSnapshot(fnSuccess);
 			},
 
 			liveDatabaseItemUpdates: function () {
@@ -113,11 +113,11 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast"],
 					oViewModel.refresh();
 				}.bind(this);
 
-				com.digiArtitus.FirestoreInstance()
-					.collection("DATABASE")
-					.doc(com.digiArtitus.companyCode)
-					.collection("ITEMS")
-					.onSnapshot(fnSuccess);
+				this._oInstance.databaseItemUnsubscribe = com.digiArtitus.FirestoreInstance()
+																	.collection("DATABASE")
+																	.doc(com.digiArtitus.companyCode)
+																	.collection("ITEMS")
+																	.onSnapshot(fnSuccess);
 			},
 
 			/* =========================================================== */

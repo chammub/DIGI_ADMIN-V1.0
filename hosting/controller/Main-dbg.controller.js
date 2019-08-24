@@ -1,10 +1,11 @@
 /* global firebase */
+/* eslint-disable sap-no-location-reload */
 
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"com/digiArtitus/controller/User",
 	"com/digiArtitus/controller/Banner",
-	"com/digiArtitus/controller/Chart",
+	"com/digiArtitus/controller/Notification",
 	"com/digiArtitus/controller/Database",
 	"com/digiArtitus/controller/Orders",
 	"com/digiArtitus/controller/Settings",
@@ -14,7 +15,8 @@ sap.ui.define([
 	"sap/ui/model/Filter",
 	"sap/m/MessageBox",
 	"sap/m/MessageToast"
-], function (Controller, User, Banner, Chart, Database, Orders, Settings, Billing, JSONModel, formatter, Filter, MessageBox, MessageToast) {
+], function (Controller, User, Banner, Notification, Database, Orders, Settings, Billing, JSONModel, formatter, Filter, MessageBox,
+	MessageToast) {
 	"use strict";
 
 	return Controller.extend("com.digiArtitus.controller.Main", {
@@ -32,13 +34,24 @@ sap.ui.define([
 			// load user object
 			this.user = new User(this);
 
+			// load user data
+			this.user.checkForLogin().then(function () {
+				this._loadPageControls();
+			}.bind(this)).catch(function () {
+				com.digiArtitus.EndGlobalBusyIndicator();
+			});
+		},
+
+		_loadPageControls: function () {
+			com.digiArtitus.StartGlobalBusyIndicator();
+
 			// load banner object
 			this.banner = new Banner(this);
 
-			// load chart object
-			this.chart = new Chart(this);
+			// load notification object
+			this.notification = new Notification(this);
 
-			// load chart object
+			// load database object
 			this.database = new Database(this);
 
 			// load orders object
@@ -50,28 +63,23 @@ sap.ui.define([
 			// load billing object
 			this.billing = new Billing(this);
 
-			// load user data
-			this.user.checkForLogin().then(function () {
-				com.digiArtitus.StartGlobalBusyIndicator();
+			this.user.loadUserData().then(function () {
+				this.notification.liveNotificationUpdates();
+				this.banner.liveBannerCollectionUpdates();
+				this.banner.liveBannerItemsUpdates();
+				this.database.liveDatabaseCollectionUpdates();
+				this.database.liveDatabaseMenuUpdates();
+				this.database.liveDatabaseItemUpdates();
+				this.orders.liveOrders();
+				this.billing.loadBillingModel();
 
-				this.user.loadUserData().then(function () {
-					this.banner.liveBannerCollectionUpdates();
-					this.banner.liveBannerItemsUpdates();
-					this.database.liveDatabaseCollectionUpdates();
-					this.database.liveDatabaseMenuUpdates();
-					this.database.liveDatabaseItemUpdates();
-					this.orders.liveOrders();
-					this.billing.loadBillingModel();
+				jQuery.sap.delayedCall(2000, this, function () {
+					com.digiArtitus.EndGlobalBusyIndicator();
+				});
 
-					jQuery.sap.delayedCall(1000, this, function () {
-						com.digiArtitus.EndGlobalBusyIndicator();
-					});
-				}.bind(this));
-			}.bind(this)).catch(function () {
-				MessageToast.show("Error in Loading");
-				com.digiArtitus.EndGlobalBusyIndicator();
-			});
-
+				// set dashboard as default
+				this._setSelectedNavBar("Dashboard");
+			}.bind(this));
 		},
 
 		onToogleNavButtonPress: function () {
@@ -91,6 +99,14 @@ sap.ui.define([
 			_setToggleButtonTooltip(sideExpanded);
 
 			toolPage.setSideExpanded(!toolPage.getSideExpanded());
+		},
+
+		handleNotificationPress: function (oEvent) {
+			this.notification.onNotificationPress(oEvent);
+		},
+
+		handleSettingsPress: function () {
+			this._setSelectedNavBar("Settings");
 		},
 
 		onSideNavItemSelect: function (oEvent) {
@@ -146,6 +162,7 @@ sap.ui.define([
 
 		onBannerCollectionListPress: function (oEvent) {
 			var oData = oEvent.getParameter("listItem").getBindingContext("oViewModel").getObject();
+			this.getView().getModel("oViewModel").setProperty("/BANNER_COLLECTION_NAME", oData.NAME);
 			this._listItemFilter("banner-item-list-id", "BANNER_COLLECTION", oData.NAME);
 		},
 
@@ -205,10 +222,6 @@ sap.ui.define([
 		onBannerItemAddPress: function () {
 			this.banner._bannerItemDialog().open();
 		},
-
-		// onBannerItemDialogClose: function () {
-		// 	this.banner._bannerItemDialog().close();
-		// },
 
 		onBannerItemListDeletePress: function (oEvent) {
 			this._deleteEntry(oEvent, true);
@@ -303,7 +316,7 @@ sap.ui.define([
 		},
 
 		handleSettingsCancelPress: function () {
-			this.settings.handleSettingsSavePress();
+			this.settings.handleSettingsCancelPress();
 		},
 
 		onBillingCreateOrder: function () {
@@ -331,12 +344,29 @@ sap.ui.define([
 			return bValidationError;
 		},
 
-		_setSelectedNavBar: function (sKey) {
-			var oView = this.getView();
-			var viewId = oView.getId();
-			var oSidePanel = oView.byId("admin-dashboard-id");
-			oSidePanel.setSelectedKey(sKey);
-			sap.ui.getCore().byId(viewId + "--pageContainer").to(viewId + "--" + sKey);
+		_setSelectedNavBar: function (sValue) {
+			var oSideNav = this.getView().byId("admin-dashboard-id");
+			var aItems = oSideNav.getItem().getItems();
+			var aFixedItems = oSideNav.getFixedItem().getItems();
+			var aTotalItems = aItems.concat(aFixedItems);
+			var oSelectedItem = null;
+
+			for (var i = 0, iLen = aTotalItems.length; i < iLen; i++) {
+				if (aTotalItems[i].getKey() === sValue) {
+					oSelectedItem = aTotalItems[i];
+					break;
+				}
+			}
+			
+			if(oSelectedItem === null) {
+				return;
+			}
+
+			// fire selection press
+			oSideNav.setSelectedItem(oSelectedItem);
+			oSideNav.fireItemSelect({
+				item: oSelectedItem
+			});
 		},
 
 		_deleteEntry: function (oEvent, bRemoveImage) {
@@ -499,8 +529,40 @@ sap.ui.define([
 			}.bind(this);
 
 			$.when(fnWarningMessage()).done(function (value) {
-				firebase.auth().signOut();
-			});
+				firebase.auth().signOut().then(function () {
+					// destroy banner object
+					this.banner.destroy();
+
+					// destroy notification object
+					this.notification.destroy();
+
+					// destroy database object
+					this.database.destroy();
+
+					// destroy orders object
+					this.orders.destroy();
+
+					// destroy settings object
+					this.settings.destroy();
+
+					// destroy billing object
+					this.billing.destroy();
+
+					com.digiArtitus.LoggedIn = false;
+					com.digiArtitus.LoggedOff = true;
+					
+					// detach listeners
+					this.notificationsUnsubscribe();
+					this.bannerCollectionUnsubscribe();
+					this.bannerItemUnsubscribe();
+					this.databaseCollectionUnsubscribe();
+					this.databaseMenuUnsubscribe();
+					this.databaseItemUnsubscribe();
+					this.orderUnsubscribe();
+					this.billingUnsubscribe();
+					
+				}.bind(this));
+			}.bind(this));
 		}
 
 	});

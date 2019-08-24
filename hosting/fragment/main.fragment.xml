@@ -1,20 +1,4 @@
 <core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:f="sap.f" xmlns:tnt="sap.tnt" xmlns:semantic="sap.m.semantic">
-	
-	<!--<semantic:FullscreenPage title="FullScreen Page Title">-->
-	<!--	<semantic:content>-->
-	<!--		<ObjectHeader title="Type something in the field, the Draft Indicator will be displayed in the footer"-->
-	<!--			intro="this is just a simulation of how the DraftIndicator will work" responsive="true"/>-->
-			<!--<form:SimpleForm editable="true">-->
-			<!--	<Label text="Type here"/>-->
-			<!--	<Input id="TypeHere" liveChange="handleLiveChange"/>-->
-			<!--</form:SimpleForm>-->
-	<!--	</semantic:content>-->
-	<!--	<semantic:customFooterContent>-->
-	<!--		<Button text="CustomFooterBtn" press="onPress"/>-->
-	<!--		<OverflowToolbarButton icon="sap-icon://settings" text="Settings" press="onPress"/>-->
-	<!--	</semantic:customFooterContent>-->
-	<!--</semantic:FullscreenPage>-->
-	
 	<tnt:ToolPage id="toolPage">
 		<tnt:header>
 			<tnt:ToolHeader>
@@ -24,7 +8,7 @@
 					</layoutData>
 				</Button>
 				<ToolbarSpacer width="20px"/>
-				<Label text="ADMIN">
+				<Label text="{oViewModel>/COMPANY_NAME}" class="tnt-header">
 					<layoutData>
 						<OverflowToolbarLayoutData priority="High"/>
 					</layoutData>
@@ -35,18 +19,13 @@
 						<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
 					</layoutData>
 				</ToolbarSpacer>
-				<f:Avatar src="{oViewModel>/LOGGED_USER_PIC}" displaySize="XS"></f:Avatar>
-				<Button text="{oViewModel>/LOGGED_USER_NAME}" type="Transparent" press="handleUserNamePress">
-					<layoutData>
-						<OverflowToolbarLayoutData priority="NeverOverflow"/>
-					</layoutData>
-				</Button>
-				<Button icon="sap-icon://action-settings" iconDensityAware="true" tooltip="Notification" type="Transparent" press="handleUserNamePress">
+				<f:Avatar src="{oViewModel>/COMPANY_PIC}" displaySize="XS"></f:Avatar>
+				<Button icon="sap-icon://action-settings" iconDensityAware="true" tooltip="Notification" type="Transparent" press="handleSettingsPress">
 					<layoutData>
 						<OverflowToolbarLayoutData priority="Low"/>
 					</layoutData>
 				</Button>
-				<Button icon="sap-icon://bell" iconDensityAware="true" tooltip="Notification" type="Transparent" press="handleUserNamePress">
+				<Button icon="sap-icon://bell" iconDensityAware="true" tooltip="Notification" type="Transparent" press="handleNotificationPress">
 					<layoutData>
 						<OverflowToolbarLayoutData priority="Low"/>
 					</layoutData>

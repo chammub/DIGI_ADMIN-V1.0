@@ -1,5 +1,6 @@
 /*eslint-env es6*/
-/*global firebase, moment, _, exportFromJSON*/
+/*global moment, _, exportFromJSON*/
+/*eslint-disable no-loop-func*/
 
 sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast", "com/digiArtitus/model/formatter"],
 	function (UI5Object, MessageBox, MessageToast, formatter) {
@@ -14,8 +15,9 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast", "
 			},
 
 			liveOrders: function () {
-				firebase
-					.firestore()
+				this._oInstance.orderUnsubscribe =       
+				com.digiArtitus
+					.FirestoreInstance()
 					.collection("DATABASE")
 					.doc(com.digiArtitus.companyCode)
 					.collection("ORDERS")
@@ -154,7 +156,9 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast", "
 						var isTodaySalesAvailable = parseFloat(oViewData.TODAY_TOTAL_PRICE) === 0;
 						var iLen = 0;
 						var aTopProductSales = [];
-						
+						var iTargetPerDay = 10000;
+						var sTargetDeviationPercentage = parseFloat((((iTargetPerDay + parseFloat(oViewData.TODAY_TOTAL_PRICE)) / 2) - iTargetPerDay) / 100).toFixed(1);
+
 						aMenuCount = _.sortBy(aMenuCount, ["COUNT"]).reverse();
 
 						for (i = 0, iLen = aMenuCount.length; i < iLen; i++) {
@@ -164,8 +168,8 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast", "
 								"Count": aMenuCount[i].COUNT,
 								"State": "Warning"
 							});
-							
-							if(i === 4) {
+
+							if (i === 4) {
 								break;
 							}
 						}
@@ -183,13 +187,13 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast", "
 													"number": parseFloat(oViewData.TODAY_TOTAL_PRICE, 10).toFixed(2),
 													"unit": "K",
 													"trend": isTodaySalesAvailable ? "Down" : "Up",
-													"state": isTodaySalesAvailable ? "Error" : "Success",
+													"state": isTodaySalesAvailable ? "Error" : "Good",
 													"target": {
-														"number": 250,
+														"number": 10,
 														"unit": "K"
 													},
 													"deviation": {
-														"number": 25
+														"number": sTargetDeviationPercentage
 													},
 													"details": "Q" + oDateInstance.quarter() + ", " + oDateInstance.get("year")
 												}
@@ -198,7 +202,7 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast", "
 										"path": "/kpiInfos/kpi"
 									},
 									"title": "Top 5 products sales",
-									"subTitle": "By average today income",
+									"subTitle": "By average daily income",
 									"unitOfMeasurement": "INR",
 									"mainIndicator": {
 										"number": "{number}",
@@ -241,7 +245,7 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast", "
 						for (i = 0, iLen = filteredTodayObjects.length; i < iLen; i++) {
 							aDashboardSaleOrder.push({
 								"salesOrder": filteredTodayObjects[i].ORDER_ID,
-								"customerName": _(filteredTodayObjects[i].CUSTOMER.NAME).replace(/(.{15})..+/, "$1…"),
+								"customerName": filteredTodayObjects[i].CUSTOMER.NAME,
 								"netAmount": com.digiArtitus.FormattedCurrency(filteredTodayObjects[i].TOTAL_PAYABLE),
 								"status": filteredTodayObjects[i].ORDER_STATUS,
 								"statusState": formatter.orderStatus(filteredTodayObjects[i].ORDER_STATUS) // "Success"
@@ -261,7 +265,7 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast", "
 								},
 								"header": {
 									"title": "Sales Orders for Surgical",
-									"subTitle": "Today",
+									"subTitle": "Recent orders",
 									"status": {
 										"text": "{headerData/statusText}"
 									}
@@ -271,17 +275,21 @@ sap.ui.define(["sap/ui/base/Object", "sap/m/MessageBox", "sap/m/MessageToast", "
 										"columns": [{
 											"title": "Sales Order",
 											"value": "{salesOrder}",
-											"identifier": true
+											"identifier": true,
+											"width": "25%"
 										}, {
 											"title": "Customer",
-											"value": "{customerName}"
+											"value": "{customerName}",
+											"width": "40%"
 										}, {
 											"title": "Net Amount",
-											"value": "{netAmount}"
+											"value": "{netAmount}",
+											"width": "15%"
 										}, {
 											"title": "Status",
 											"value": "{status}",
-											"state": "{statusState}"
+											"state": "{statusState}",
+											"width": "20%"
 										}]
 									}
 								}
